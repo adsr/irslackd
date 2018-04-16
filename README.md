@@ -10,13 +10,14 @@ own Slack-IRC gateway.
 2. Run irslackd
     ```
     $ git clone https://github.com/adsr/irslackd.git
+    $ cd irslackd
     $ npm install
     $ ./irslackd
     ```
-3. [Get a slack token][1]
+3. [Get a Slack token][1]
 4. In your IRC client:
    `/connect irc://your-nick:your-slack-token@localhost:6667`
-5. Enjoy fresh IRC gateway experience
+5. Enjoy a fresh IRC gateway experience
 
 ### TODO
 
