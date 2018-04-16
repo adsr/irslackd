@@ -17,7 +17,14 @@
     "url": "https://github.com/adsr/irslackd/issues"
   },
   "homepage": "https://github.com/adsr/irslackd#readme",
+  "scripts": {
+    "pretest": "eslint --ignore-path .gitignore ."
+  },
   "dependencies": {
     "@slack/client": "^4.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-strongloop": "^2.1.0"
   }
 }

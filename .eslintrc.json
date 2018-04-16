@@ -1,0 +1,13 @@
+{
+  "env": {
+    "es6": true
+  },
+  "extends": "strongloop",
+  "parserOptions": {
+    "ecmaVersion": 8
+  },
+  "rules": {
+    "no-multi-spaces": 0,
+    "max-len": 0
+  }
+}
