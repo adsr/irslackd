@@ -3,26 +3,31 @@
 [Slack is ending IRC support][0] on May 15, 2018. So, let's build our
 own Slack-IRC gateway.
 
-### Synopsis
+### Setup
 
-1. Install irslackd in your Slack workspace. (I don't think you can
-   actually do this until the app is distributed.)
-2. Run irslackd
+1. [Authorize irslackd][1] on your Slack workspace. Note the access token.
+2. Run `./bin/create_tls_key.sh` to create a TLS key and cert. This will put
+   a private key and cert in `~/.irslackd`.
+3. Run irslackd:
     ```
     $ git clone https://github.com/adsr/irslackd.git
     $ cd irslackd
     $ npm install
     $ ./irslackd
     ```
-3. [Get a Slack token][1]
-4. In your IRC client:
-   `/connect irc://your-nick:your-slack-token@localhost:6667`
+4. In your IRC client, e.g., WeeChat:
+    ```
+    /server add irslackd localhost/6697
+    /set irc.server.irslackd.password access-token-from-step-1
+    /set irc.server.irslackd.ssl on
+    /set irc.server.irslackd.ssl_fingerprint fingerprint-from-step-2
+    /connect irslackd
+    ```
 5. Enjoy a fresh IRC gateway experience
 
 ### TODO
 
-* [Github issues][2]
-* Add script to automate getting API token
+* (See [Github issues][2])
 * Figure out `identity.basic` scope and prevent self-echo
 * Missing lots of error checking
 * Get review from someone who actually writes JavaScript
@@ -33,5 +38,5 @@ own Slack-IRC gateway.
 * Add to npm
 
 [0]: https://my.slack.com/account/gateways
-[1]: https://gist.github.com/adsr/c91d1d166fcb347009cc4417fd54f4aa
+[1]: https://slack.com/oauth/authorize?client_id=2151705565.329118621748&scope=client
 [2]: https://github.com/adsr/irslackd/issues

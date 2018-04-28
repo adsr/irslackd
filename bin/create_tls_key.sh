@@ -1,3 +1,7 @@
 #!/bin/bash
+set -xe
 
-openssl req -newkey rsa:4096 -nodes -sha512 -x509 -days 3650 -nodes -out cert.pem -keyout pkey.pem
+mkdir -p ~/.irslackd
+openssl req -newkey rsa:4096 -nodes -sha512 -x509 -days 3650 -nodes -out ~/.irslackd/cert.pem -keyout ~/.irslackd/pkey.pem
+fingerprint=$(openssl x509 -noout -fingerprint -sha512 -inform pem -in ~/.irslackd/cert.pem | cut -d= -f2-)
+echo $fingerprint | tr -d ':'
