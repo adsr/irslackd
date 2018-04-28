@@ -21,6 +21,7 @@ own Slack-IRC gateway.
 
 ### TODO
 
+* [Github issues][2]
 * Add script to automate getting API token
 * Figure out `identity.basic` scope and prevent self-echo
 * Missing lots of error checking
@@ -28,9 +29,9 @@ own Slack-IRC gateway.
 * Forward errors, notices, debug, etc to client
 * Prevent exhausting rate limits
 * Handle more Slack events, more of IRC protocol
-* Add TLS option
 * Add to Slack App Directory
 * Add to npm
 
 [0]: https://my.slack.com/account/gateways
 [1]: https://gist.github.com/adsr/c91d1d166fcb347009cc4417fd54f4aa
+[2]: https://github.com/adsr/irslackd/issues
