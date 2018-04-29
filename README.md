@@ -1,7 +1,7 @@
 # irslackd
 
-[Slack is ending IRC support][0] on May 15, 2018. So, let's build our
-own Slack-IRC gateway.
+[Slack is ending IRC support][0] on May 15, 2018. So, let's build our own
+Slack-IRC gateway.
 
 ### Setup
 
@@ -23,18 +23,11 @@ own Slack-IRC gateway.
     /set irc.server.irslackd.ssl_fingerprint fingerprint-from-step-2
     /connect irslackd
     ```
-5. Enjoy a fresh IRC gateway experience
+5. Enjoy a fresh IRC gateway experience.
 
 ### TODO
 
-* (See [Github issues][2])
-* Missing lots of error checking
-* Get review from someone who actually writes JavaScript
-* Forward errors, notices, debug, etc to client
-* Prevent exhausting rate limits
-* Handle more Slack events, more of IRC protocol
-* Add to Slack App Directory
-* Add to npm
+* See [Github issues][2]
 
 [0]: https://my.slack.com/account/gateways
 [1]: https://slack.com/oauth/authorize?client_id=2151705565.329118621748&scope=client
