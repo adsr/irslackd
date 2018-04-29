@@ -28,7 +28,6 @@ own Slack-IRC gateway.
 ### TODO
 
 * (See [Github issues][2])
-* Figure out `identity.basic` scope and prevent self-echo
 * Missing lots of error checking
 * Get review from someone who actually writes JavaScript
 * Forward errors, notices, debug, etc to client
