@@ -5,6 +5,7 @@ Slack-IRC gateway.
 
 ### Setup
 
+0. Setup Node >=8.x
 1. [Authorize irslackd][1] on your Slack workspace. Note the access token.
 2. Run `./bin/create_tls_key.sh` to create a TLS key and cert. This will put
    a private key and cert in `~/.irslackd`.
