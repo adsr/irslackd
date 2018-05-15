@@ -5,10 +5,10 @@ Slack-IRC gateway.
 
 ### Setup
 
-0. Setup Node >=8.x
-1. [Authorize irslackd][1] on your Slack workspace. Note the access token.
+0. [Setup Node >=8.x][1].
+1. [Authorize irslackd][2] on your Slack workspace. Note the access token.
    
-   [![Authorize irslackd](https://platform.slack-edge.com/img/add_to_slack.png)][1]
+   [![Authorize irslackd](https://platform.slack-edge.com/img/add_to_slack.png)][2]
 2. Run `./bin/create_tls_key.sh` to create a TLS key and cert. This will put
    a private key and cert in `~/.irslackd`. Note the fingerprint.
 3. Run irslackd:
@@ -30,18 +30,19 @@ Slack-IRC gateway.
 
 ### Help
 
-* File bug reports and feature requests via [Github issues][2].
+* File bug reports and feature requests via [Github issues][3].
 
 ### Contributing
 
-* See [Github issues][2].
+* See [Github issues][3].
 
-### irslackd workspace
+### irslackd Slack workspace
 
-* Feel free to join the [irslackd Slack workspace][3] for testing your
-  setup.
+* Feel free to join the [irslackd Slack workspace][4] for testing your
+  irslackd setup.
 
 [0]: https://my.slack.com/account/gateways
-[1]: https://slack.com/oauth/authorize?client_id=2151705565.329118621748&scope=client
-[2]: https://github.com/adsr/irslackd/issues
-[3]: https://join.slack.com/t/irslackd/shared_invite/enQtMzYzNzk3MTQwOTE0LWI0ZmZmZjZmNzZkMWM1Y2UwMGU2MzUxODg4OTZkYmNmN2VjNjRiZmVlZDRmZGM1ZTMzM2YwYzZhODBkY2QxM2Q
+[1]: https://nodejs.org/
+[2]: https://slack.com/oauth/authorize?client_id=2151705565.329118621748&scope=client
+[3]: https://github.com/adsr/irslackd/issues
+[4]: https://join.slack.com/t/irslackd/shared_invite/enQtMzYzNzk3MTQwOTE0LWI0ZmZmZjZmNzZkMWM1Y2UwMGU2MzUxODg4OTZkYmNmN2VjNjRiZmVlZDRmZGM1ZTMzM2YwYzZhODBkY2QxM2Q
