@@ -10,7 +10,7 @@ Slack-IRC gateway.
    
    [![Authorize irslackd](https://platform.slack-edge.com/img/add_to_slack.png)][1]
 2. Run `./bin/create_tls_key.sh` to create a TLS key and cert. This will put
-   a private key and cert in `~/.irslackd`.
+   a private key and cert in `~/.irslackd`. Note the fingerprint.
 3. Run irslackd:
     ```
     $ git clone https://github.com/adsr/irslackd.git
