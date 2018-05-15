@@ -28,7 +28,6 @@ Slack-IRC gateway.
     ```
 5. Enjoy a fresh IRC gateway experience.
 
-
 ### Help
 
 * File bug reports and feature requests via [Github issues][2].
@@ -37,6 +36,12 @@ Slack-IRC gateway.
 
 * See [Github issues][2].
 
+### irslackd workspace
+
+* Feel free to join the [irslackd Slack workspace][3] for testing your
+  setup.
+
 [0]: https://my.slack.com/account/gateways
 [1]: https://slack.com/oauth/authorize?client_id=2151705565.329118621748&scope=client
 [2]: https://github.com/adsr/irslackd/issues
+[3]: https://join.slack.com/t/irslackd/shared_invite/enQtMzYzNzk3MTQwOTE0LWI0ZmZmZjZmNzZkMWM1Y2UwMGU2MzUxODg4OTZkYmNmN2VjNjRiZmVlZDRmZGM1ZTMzM2YwYzZhODBkY2QxM2Q
