@@ -28,9 +28,14 @@ Slack-IRC gateway.
     ```
 5. Enjoy a fresh IRC gateway experience.
 
-### TODO
 
-* See [Github issues][2]
+### Help
+
+* File bug reports and feature requests via [Github issues][2].
+
+### Contributing
+
+* See [Github issues][2].
 
 [0]: https://my.slack.com/account/gateways
 [1]: https://slack.com/oauth/authorize?client_id=2151705565.329118621748&scope=client
