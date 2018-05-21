@@ -48,6 +48,15 @@ irslackd is actively developed and used daily on a 1000+ user Slack workspace.
 * File bug reports and feature requests via [Github issues][3].
 * Feel free to sumbit PRs.
 
+### Related projects
+
+* https://github.com/ltworf/localslackirc (another gateway, Python)
+* https://github.com/insomniacslk/irc-slack (another gateway, Go)
+* https://github.com/wee-slack/wee-slack (a terminal client, WeeChat-based)
+* https://github.com/erroneousboat/slack-term (a terminal client, Go)
+* https://github.com/42wim/matterircd (an IRCd for Mattermost and Slack)
+* https://github.com/dylex/slack-libpurple (Slack plugin for libpurple)
+
 ### irslackd Slack workspace
 
 * Feel free to join the [irslackd Slack workspace][4] for testing your
