@@ -8,6 +8,7 @@
   },
   "rules": {
     "no-multi-spaces": 0,
-    "max-len": 0
+    "max-len": 0,
+    "no-control-regex": 0
   }
 }
