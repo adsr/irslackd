@@ -3,7 +3,7 @@
 [Slack ended IRC support][0] on May 15, 2018. So, we built our own Slack-IRC
 gateway.
 
-irslackd is actively developed and used daily on a 1000+ user Slack workspace.
+irslackd is actively developed works with ZNC and used daily on a 1000+ user Slack workspace.
 
 ### Features
 
@@ -36,9 +36,10 @@ irslackd is actively developed and used daily on a 1000+ user Slack workspace.
     $ IRSLACKD_LISTEN_PORT=6679 ./irslackd
     ```
 
-5. [Authorize irslackd][2] on your Slack workspace. Note the access token.
+5. Obtain a token for your Slack workspace by following the below link. Then select the desired workspace
+   in the dropdown (upper right).  Finally save the token, it will look similar to this: xoxp-jhvbT85cdlku&^b88s78765JHBfrewgsdy7
 
-   [![Authorize irslackd](https://platform.slack-edge.com/img/add_to_slack.png)][2]
+   [![Token Request](https://platform.slack-edge.com/img/add_to_slack.png)][2]
 
 6. In your IRC client, e.g., WeeChat:
     ```
