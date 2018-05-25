@@ -31,7 +31,7 @@ irslackd is actively developed, works with ZNC and used daily on a 1000+ user Sl
     $ npm install
     $ ./irslackd
     ```
-    To start using a custom port:
+    To start irslackd using a custom port (for example 6679):
     ```
     $ IRSLACKD_LISTEN_PORT=6679 ./irslackd
     ```
