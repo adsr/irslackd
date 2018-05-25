@@ -41,7 +41,7 @@ irslackd is actively developed and used daily on a 1000+ user Slack workspace.
     /server add irslackd localhost/6697
     /set irc.server.irslackd.password access-token-from-step-2
     /set irc.server.irslackd.ssl on
-    /set irc.server.irslackd.ssl_fingerprint fingerprint-from-step-3
+    /set irc.server.irslackd.ssl_fingerprint fingerprint-from-step-4
     /connect irslackd
     ```
 
