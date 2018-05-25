@@ -31,6 +31,10 @@ irslackd is actively developed and used daily on a 1000+ user Slack workspace.
     $ npm install
     $ ./irslackd
     ```
+    To start using a custom port:
+    ```
+    $ IRSLACKD_LISTEN_PORT=6679 ./irslackd
+    ```
 
 5. [Authorize irslackd][2] on your Slack workspace. Note the access token.
 
