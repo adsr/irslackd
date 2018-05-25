@@ -3,7 +3,7 @@
 [Slack ended IRC support][0] on May 15, 2018. So, we built our own Slack-IRC
 gateway.
 
-irslackd is actively developed works with ZNC and used daily on a 1000+ user Slack workspace.
+irslackd is actively developed, works with ZNC and used daily on a 1000+ user Slack workspace.
 
 ### Features
 
