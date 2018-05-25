@@ -17,35 +17,37 @@ irslackd is actively developed and used daily on a 1000+ user Slack workspace.
 
 1. [Install Node >=8.x][1] with npm. You can check your version of Node by running `node --version`.
 
-2. [Authorize irslackd][2] on your Slack workspace. Note the access token.
-   
-   [![Authorize irslackd](https://platform.slack-edge.com/img/add_to_slack.png)][2]
-
-3. Clone irslackd:
+2. Clone irslackd:
     ```
     $ git clone https://github.com/adsr/irslackd.git
     $ cd irslackd
     ```
 
-4. Run `./bin/create_tls_key.sh` to create a TLS key and cert. This will put
+3. Run `./bin/create_tls_key.sh` to create a TLS key and cert. This will put
    a private key and cert in `~/.irslackd`. Note the fingerprint.
 
-5. Run irslackd:
+4. Run irslackd:
     ```
     $ npm install
     $ ./irslackd
     ```
 
+5. [Authorize irslackd][2] on your Slack workspace. Note the access token.
+
+   [![Authorize irslackd](https://platform.slack-edge.com/img/add_to_slack.png)][2]
+
 6. In your IRC client, e.g., WeeChat:
     ```
-    /server add irslackd localhost/6697
-    /set irc.server.irslackd.password access-token-from-step-2
+    /server add irslackd-your-workspace localhost/6697
     /set irc.server.irslackd.ssl on
-    /set irc.server.irslackd.ssl_fingerprint fingerprint-from-step-4
+    /set irc.server.irslackd.ssl_fingerprint fingerprint-from-step-3
+    /set irc.server.irslackd.password access-token-from-step-5
     /connect irslackd
     ```
 
-7. Enjoy a fresh IRC gateway experience.
+7. Repeat steps 5 and 6 for each Slack workspace you'd like to connect to.
+
+8. Enjoy a fresh IRC gateway experience.
 
 ### Contribute
 
