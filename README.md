@@ -37,7 +37,9 @@ irslackd is actively developed, works with ZNC and used daily on a 1000+ user Sl
     ```
 
 5. Obtain a token for your Slack workspace by following the below link. Then select the desired workspace
-   in the dropdown (upper right).  Finally save the token, it will look similar to this: xoxp-jhvbT85cdlku&^b88s78765JHBfrewgsdy7
+   in the dropdown (upper right).  Finally save the token, it will look similar to this: 
+   
+   xoxp-jhvbT85cdlku&^b88s78765JHBfrewgsdy7
 
    [![Token Request](https://platform.slack-edge.com/img/add_to_slack.png)][2]
 
