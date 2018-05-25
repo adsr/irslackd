@@ -6,7 +6,7 @@ const fs = require('fs');
 const irslackd = require('../lib/irslackd.js');
 
 new irslackd.Irslackd({
-  host: process.env.IRSLACKD_LISTEN_HOST || '0.0.0.0',
+  host: process.env.IRSLACKD_LISTEN_HOST || '127.0.0.1',
   port: process.env.IRSLACKD_LISTEN_PORT || 6697,
   tlsOpts: {
     key: fs.readFileSync(process.env.IRSLACKD_TLS_PKEY || (os.homedir() + '/.irslackd/pkey.pem')),
