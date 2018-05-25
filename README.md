@@ -38,11 +38,11 @@ irslackd is actively developed and used daily on a 1000+ user Slack workspace.
 
 6. In your IRC client, e.g., WeeChat:
     ```
-    /server add irslackd-your-workspace localhost/6697
-    /set irc.server.irslackd.ssl on
-    /set irc.server.irslackd.ssl_fingerprint fingerprint-from-step-3
-    /set irc.server.irslackd.password access-token-from-step-5
-    /connect irslackd
+    /server add irslackd_workspace localhost/6697
+    /set irc.server.irslackd_workspace.ssl on
+    /set irc.server.irslackd_workspace.ssl_fingerprint fingerprint-from-step-3
+    /set irc.server.irslackd_workspace.password access-token-from-step-5
+    /connect irslackd_workspace
     ```
 
 7. Repeat steps 5 and 6 for each Slack workspace you'd like to connect to.
