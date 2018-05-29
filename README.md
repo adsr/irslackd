@@ -38,21 +38,31 @@ irslackd is actively developed, works with ZNC and used daily on a 1000+ user Sl
     $ IRSLACKD_LISTEN_PORT=6679 ./irslackd
     ```
 
-5. Obtain a token for your Slack workspace by following the below link. Then select the desired workspace
-   in the dropdown (upper right).  Finally save the token, it will look similar to this: 
+5. Obtain a token for your Slack workspace by following the link below. Then select the desired workspace
+   in the dropdown (upper right).  Finally save the token (for step 6), it will look similar to this: 
    
    xoxp-jhvbT85cdlku&^b88s78765JHBfrewgsdy7
 
    [![Token Request](https://platform.slack-edge.com/img/add_to_slack.png)][2]
 
-6. In your IRC client, e.g., WeeChat:
-    ```
+6. Connect to irslackd
+
+```
+IRC client, e.g., WeeChat:
+
     /server add irslackd_workspace localhost/6697
     /set irc.server.irslackd_workspace.ssl on
     /set irc.server.irslackd_workspace.ssl_fingerprint fingerprint-from-step-3
     /set irc.server.irslackd_workspace.password access-token-from-step-5
     /connect irslackd_workspace
-    ```
+
+ZNC Bouncer:
+
+    Add a new 'network'
+    In 'Servers of this IRC network' enter: 127.0.01 +port# access-token-from-step-5
+    In 'Trusted SSL fingerprints of this IRC network' enter: fingerprint-from-step-3
+    Connect to ZNC w/your client and enjoy 
+```
 
 7. Repeat steps 5 and 6 for each Slack workspace you'd like to connect to.
 
