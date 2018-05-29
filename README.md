@@ -5,6 +5,8 @@ gateway.
 
 irslackd is actively developed, works with ZNC and used daily on a 1000+ user Slack workspace.
 
+[![Build Status](https://travis-ci.org/adsr/irslackd.svg?branch=master)](https://travis-ci.org/adsr/irslackd)
+
 ### Features
 
 * TLS-encrypted IRCd

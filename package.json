@@ -18,11 +18,13 @@
   },
   "homepage": "https://github.com/adsr/irslackd#readme",
   "scripts": {
-    "pretest": "eslint --ignore-path .gitignore ."
+    "pretest": "eslint --ignore-path .gitignore .",
+    "test": "find tests -name 'test_*.js' | xargs -rn1 node"
   },
   "dependencies": {
     "@slack/client": "^4.1.0",
-    "await-lock": "1.1.2"
+    "tape": "^4.9.0",
+    "await-lock": "^1.1.2"
   },
   "devDependencies": {
     "eslint": "^4.19.1",

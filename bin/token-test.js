@@ -71,5 +71,5 @@ const slackWeb = new slack.WebClient(slackToken);
       process.exit(1);
     }
   }
-  console.log("Looks OK!");
+  console.log('Looks OK!');
 })();
