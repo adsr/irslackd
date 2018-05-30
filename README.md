@@ -3,7 +3,7 @@
 [Slack ended IRC support][0] on May 15, 2018. So, we built our own Slack-IRC
 gateway.
 
-irslackd is actively developed and used daily on a 1000+ user Slack workspace.
+irslackd is actively developed, works with ZNC and used daily on a 1000+ user Slack workspace.
 
 [![Build Status](https://travis-ci.org/adsr/irslackd.svg?branch=master)](https://travis-ci.org/adsr/irslackd)
 
@@ -33,19 +33,36 @@ irslackd is actively developed and used daily on a 1000+ user Slack workspace.
     $ npm install
     $ ./irslackd
     ```
-
-5. [Authorize irslackd][2] on your Slack workspace. Note the access token.
-
-   [![Authorize irslackd](https://platform.slack-edge.com/img/add_to_slack.png)][2]
-
-6. In your IRC client, e.g., WeeChat:
+    To start irslackd using a custom port (for example 6679):
     ```
+    $ IRSLACKD_LISTEN_PORT=6679 ./irslackd
+    ```
+
+5. Obtain a token for your Slack workspace by following the link below. Then select the desired workspace
+   in the dropdown (upper right).  Finally save the token (for step 6), it will look similar to this: 
+   
+   xoxp-jhvbT85cdlku&^b88s78765JHBfrewgsdy7
+
+   [![Token Request](https://platform.slack-edge.com/img/add_to_slack.png)][2]
+
+6. Connect to irslackd
+
+```
+IRC client, e.g., WeeChat:
+
     /server add irslackd_workspace localhost/6697
     /set irc.server.irslackd_workspace.ssl on
     /set irc.server.irslackd_workspace.ssl_fingerprint fingerprint-from-step-3
     /set irc.server.irslackd_workspace.password access-token-from-step-5
     /connect irslackd_workspace
-    ```
+
+ZNC Bouncer:
+
+    Add a new 'network'
+    In 'Servers of this IRC network' enter: 127.0.01 +port# access-token-from-step-5
+    In 'Trusted SSL fingerprints of this IRC network' enter: fingerprint-from-step-3
+    Connect to ZNC w/your client and enjoy 
+```
 
 7. Repeat steps 5 and 6 for each Slack workspace you'd like to connect to.
 
