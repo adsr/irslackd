@@ -54,7 +54,12 @@ irslackd is actively developed and used daily on a 1000+ user Slack workspace.
 ### Contribute
 
 * File bug reports and feature requests via [Github issues][3].
-* Feel free to sumbit PRs.
+* Feel free to submit PRs. Make sure to include tests.
+
+### Tests
+
+* To run all tests: `npm test`
+* To run a single test, e.g.: `npm test test_join`
 
 ### Related projects
 

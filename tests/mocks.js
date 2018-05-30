@@ -73,6 +73,7 @@ class MockSlackRtmClient extends EventEmitter {
 }
 
 async function connectOneIrcClient(t) {
+  console.log('# tape output off');
   // Start daemon
   const daemon = new irslackd.Irslackd({
     host: '1.2.3.4',
@@ -138,6 +139,7 @@ async function connectOneIrcClient(t) {
   ircSocket.expect(':irslackd 332 test_slack_user #test_chan_1 :topic1');
   ircSocket.expect(':irslackd 353 test_slack_user = #test_chan_1 :test_slack_user test_slack_user test_slack_fooo test_slack_barr');
   await daemon.onSlackReady(ircUser, 'ready');
+  console.log('# tape output on');
   return {
     daemon: daemon,
     ircSocket: ircSocket,
@@ -146,6 +148,7 @@ async function connectOneIrcClient(t) {
     slackRtm: slackRtm,
   };
 }
+connectOneIrcClient.planCount = 18;
 
 exports.MockSlackWebClient = MockSlackWebClient;
 exports.MockSlackRtmClient = MockSlackRtmClient;
