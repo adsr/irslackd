@@ -34,11 +34,20 @@ irslackd is actively developed and used daily on a 1000+ user Slack workspace.
     $ ./irslackd
     ```
 
-5. [Authorize irslackd][2] on your Slack workspace. Note the access token.
+    By default irslackd listens on `127.0.0.1:6697`. Set the env vars
+    `IRSLACKD_LISTEN_PORT` and `IRSLACKD_LISTEN_HOST` to change the listen
+    address.
+
+5. Follow the link below to obtain an irslackd token for your Slack workspace:
 
    [![Authorize irslackd](https://platform.slack-edge.com/img/add_to_slack.png)][2]
 
-6. In your IRC client, e.g., WeeChat:
+   Select the desired workspace in the dropdown in the upper right corner. Click
+   'Authorize', and copy the access token. It will look something like this:
+
+   `xoxp-012345678901-012345678901-012345678901-0123456789abcdef0123456789abcdef`
+
+6. Connect to irslackd via your IRC client, e.g., WeeChat:
     ```
     /server add irslackd_workspace localhost/6697
     /set irc.server.irslackd_workspace.ssl on
@@ -46,6 +55,7 @@ irslackd is actively developed and used daily on a 1000+ user Slack workspace.
     /set irc.server.irslackd_workspace.password access-token-from-step-5
     /connect irslackd_workspace
     ```
+    Check the wiki for more [client configuration notes][5].
 
 7. Repeat steps 5 and 6 for each Slack workspace you'd like to connect to.
 
@@ -53,6 +63,7 @@ irslackd is actively developed and used daily on a 1000+ user Slack workspace.
 
 ### Contribute
 
+* Add more [client configuration notes][5].
 * File bug reports and feature requests via [Github issues][3].
 * Feel free to submit PRs. Make sure to include tests.
 
@@ -80,3 +91,4 @@ irslackd is actively developed and used daily on a 1000+ user Slack workspace.
 [2]: https://slack.com/oauth/authorize?client_id=2151705565.329118621748&scope=client
 [3]: https://github.com/adsr/irslackd/issues
 [4]: https://join.slack.com/t/irslackd/shared_invite/enQtMzYzNzk3MTQwOTE0LWI0ZmZmZjZmNzZkMWM1Y2UwMGU2MzUxODg4OTZkYmNmN2VjNjRiZmVlZDRmZGM1ZTMzM2YwYzZhODBkY2QxM2Q
+[5]: https://github.com/adsr/irslackd/wiki/IRC-Client-Config
