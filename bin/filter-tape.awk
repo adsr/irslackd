@@ -2,6 +2,7 @@
 /^$/                    { next }
 /^# tests /             { print; next }
 /^# pass /              { print; next }
+/^# fail /              { print; next }
 /^# ok/                 { print; next }
 /^# tape output off/    { off=1; next }
 /^# tape output on/     { off=0; next }

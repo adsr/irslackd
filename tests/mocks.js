@@ -21,6 +21,7 @@ class MockIrcSocket extends EventEmitter {
       let expectedLine = this.expectedLines[i];
       if (expectedLine.trim() === actualLine.trim()) {
         this.t.ok(true, testMsg);
+        this.expectedLines.splice(i, 1);
         return true;
       }
     }
@@ -125,8 +126,8 @@ async function connectOneIrcClient(t) {
   ]});
   slackWeb.expect('users.setPresence', { presence: 'auto' }, { ok: true });
   slackWeb.expect('usergroups.list', { include_count: false, include_disabled: false, include_users: false }, { ok: true, usergroups: [
-    { id: '', handle: '' },
-    { id: '', handle: '' },
+    { id: 'S1234GRP1', handle: '@group1' },
+    { id: 'S1234GRP2', handle: '@group2' },
   ]});
   slackWeb.expect('conversations.members', { channel: 'C1234CHAN1' }, { ok: true, members: [
     'U1234USER',
