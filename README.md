@@ -17,7 +17,8 @@ irslackd is actively developed and used daily on a 1000+ user Slack workspace.
 
 ### Setup
 
-1. [Install Node >=8.x][1] with npm. You can check your version of Node by running `node --version`.
+1. [Install Node >=8.x][1] and npm. You can check your version of Node by
+   running `node --version`.
 
 2. Clone irslackd:
     ```
@@ -34,9 +35,8 @@ irslackd is actively developed and used daily on a 1000+ user Slack workspace.
     $ ./irslackd
     ```
 
-    By default irslackd listens on `127.0.0.1:6697`. Set the env vars
-    `IRSLACKD_LISTEN_PORT` and `IRSLACKD_LISTEN_HOST` to change the listen
-    address.
+    By default irslackd listens on `127.0.0.1:6697`. Set the command line
+    options `-p <port>` and/or `-a <address>` to change the listen address.
 
 5. Follow the link below to obtain an irslackd token for your Slack workspace:
 
