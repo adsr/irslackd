@@ -6,7 +6,7 @@ const mocks = require('./mocks');
 test('irc_list', async(t) => {
   t.plan(5 + mocks.connectOneIrcClient.planCount);
   const c = await mocks.connectOneIrcClient(t);
-  c.slackWeb.expect('conversations.list', { exclude_archived: true, types: 'public_channel' }, {
+  c.slackWeb.expect('conversations.list', { exclude_archived: true, types: 'public_channel', limit: 1000 }, {
     ok: true,
     channels: [
       { name: 'chan1', num_members: 1, topic: { value: 'chan1 topic' } },

@@ -16,7 +16,7 @@ test('irc_join_simple', async(t) => {
       },
     },
   });
-  c.slackWeb.expect('conversations.members', { channel: 'CFOOBAR' }, { ok: true, members: [
+  c.slackWeb.expect('conversations.members', { channel: 'CFOOBAR', limit: 1000 }, { ok: true, members: [
     'U1234USER',
     'U1235BARR',
     'U1235BAZZ',
@@ -46,7 +46,7 @@ test('irc_join_already_in', async(t) => {
       },
     },
   });
-  c.slackWeb.expect('conversations.members', { channel: 'CFOOBAR' }, { ok: true, members: [
+  c.slackWeb.expect('conversations.members', { channel: 'CFOOBAR', limit: 1000 }, { ok: true, members: [
     'U1234USER',
     'U1235BARR',
     'U1235BAZZ',
@@ -64,8 +64,11 @@ test('irc_join_csv', async(t) => {
   const c = await mocks.connectOneIrcClient(t);
   for (let chan of ['foobar', 'quuxbar']) {
     const chanId = 'C' + chan.toUpperCase();
-    c.slackWeb.expect('channels.join',         { name: chan },      { ok: true, channel: { id: chanId, topic: { value: chan + ' topic here' }}});
-    c.slackWeb.expect('conversations.members', { channel: chanId }, { ok: true, members: [
+    c.slackWeb.expect('channels.join', { name: chan }, { ok: true, channel: {
+      id: chanId,
+      topic: { value: chan + ' topic here' },
+    }});
+    c.slackWeb.expect('conversations.members', { channel: chanId, limit: 1000 }, { ok: true, members: [
       'U1234USER',
       'U1235BARR',
       'U1235BAZZ',
@@ -84,7 +87,7 @@ test('slack_join', async(t) => {
   const c = await mocks.connectOneIrcClient(t);
   c.slackWeb.expect('conversations.info',    { channel: 'CKOOLKEITH' }, { ok: true, channel: { id: 'CKOOLKEITH', name: 'koolkeith', topic: { value: 'kool topic here' }}});
   c.slackWeb.expect('conversations.info',    { channel: 'CKOOLKEITH' }, { ok: true, channel: { id: 'CKOOLKEITH', name: 'koolkeith', topic: { value: 'kool topic here' }}}); // TODO can be more efficient here
-  c.slackWeb.expect('conversations.members', { channel: 'CKOOLKEITH' }, { ok: true, members: [
+  c.slackWeb.expect('conversations.members', { channel: 'CKOOLKEITH', limit: 1000 }, { ok: true, members: [
     'U1234USER',
     'U1235QUUX',
     'UNEWGUY',

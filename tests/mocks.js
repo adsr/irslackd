@@ -113,23 +113,23 @@ async function connectOneIrcClient(t) {
   // Send ready event from Slack
   const slackWeb = ircUser.slackWeb;
   const slackRtm = ircUser.slackRtm;
-  slackWeb.expect('users.list', {}, { ok: true, members: [
+  slackWeb.expect('users.list', { limit: 1000 }, { ok: true, members: [
     { id: 'U1234USER', name: 'test_slack_user', deleted: false },
     { id: 'U1235FOOO', name: 'test_slack_fooo', deleted: false },
     { id: 'U1235BARR', name: 'test_slack_barr', deleted: false },
     { id: 'U1235BAZZ', name: 'test_slack_bazz', deleted: false },
     { id: 'U1235QUUX', name: 'test_slack_quux', deleted: false },
   ]});
-  slackWeb.expect('conversations.list', { types: 'public_channel,private_channel,mpim' }, { ok: true, channels: [
+  slackWeb.expect('conversations.list', { types: 'public_channel,private_channel,mpim', limit: 1000 }, { ok: true, channels: [
     { id: 'C1234CHAN1', name: 'test_chan_1', is_member: true,  topic: { value: 'topic1' }},
     { id: 'C1235CHAN2', name: 'test_chan_2', is_member: false, topic: { value: 'topic2' }},
   ]});
   slackWeb.expect('users.setPresence', { presence: 'auto' }, { ok: true });
-  slackWeb.expect('usergroups.list', { include_count: false, include_disabled: false, include_users: false }, { ok: true, usergroups: [
+  slackWeb.expect('usergroups.list', { include_count: false, include_disabled: false, include_users: false, limit: 1000 }, { ok: true, usergroups: [
     { id: 'S1234GRP1', handle: '@group1' },
     { id: 'S1234GRP2', handle: '@group2' },
   ]});
-  slackWeb.expect('conversations.members', { channel: 'C1234CHAN1' }, { ok: true, members: [
+  slackWeb.expect('conversations.members', { channel: 'C1234CHAN1', limit: 1000 }, { ok: true, members: [
     'U1234USER',
     'U1235FOOO',
     'U1235BARR',

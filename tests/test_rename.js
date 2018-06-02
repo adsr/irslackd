@@ -15,7 +15,7 @@ test('slack_rename', async(t) => {
       },
     },
   });
-  c.slackWeb.expect('conversations.members', { channel: 'C1234CHAN1' }, { ok: true, members: [
+  c.slackWeb.expect('conversations.members', { channel: 'C1234CHAN1', limit: 1000 }, { ok: true, members: [
     'U1234USER',
     'U1235BARR',
   ]});
