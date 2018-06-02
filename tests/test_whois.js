@@ -13,7 +13,7 @@ test('irc_whois', async(t) => {
       real_name: 'John Quux',
     },
   });
-  c.ircSocket.expect(':irslackd 311 = test_slack_quux test_slack_quux irslackd * :John Quux');
+  c.ircSocket.expect(':irslackd 311 test_slack_user test_slack_quux test_slack_quux irslackd * :John Quux');
   await c.daemon.onIrcWhois(c.ircUser, { args: [ 'test_slack_quux' ] });
   t.end();
 });
