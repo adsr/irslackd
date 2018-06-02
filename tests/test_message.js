@@ -49,3 +49,16 @@ test('slack_privmsg', async(t) => {
   });
   t.end();
 });
+
+test('slack_privmsg_hidden', async(t) => {
+  t.plan(0 + mocks.connectOneIrcClient.planCount);
+  const c = await mocks.connectOneIrcClient(t);
+  await c.daemon.onSlackMessage(c.ircUser, {
+    text: 'hello world',
+    hidden: true,
+    user: 'U1234USER',
+    channel: 'C1234CHAN1',
+    ts: '1234.5678',
+  });
+  t.end();
+});
