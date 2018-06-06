@@ -99,3 +99,23 @@ test('slack_join', async(t) => {
   await c.daemon.onSlackChannelJoined(c.ircUser, { channel: 'CKOOLKEITH' });
   t.end();
 });
+
+test('no_double_join', async(t) => {
+  t.plan(1 + mocks.connectOneIrcClient.planCount);
+  const c = await mocks.connectOneIrcClient(t);
+
+  c.ircSocket.expect(':test_slack_quux JOIN #test_chan_1');
+  await c.daemon.onSlackMemberJoinedChannel(c.ircUser, { channel: 'C1234CHAN1', user: 'U1235QUUX' });
+  await c.daemon.onSlackMessage(c.ircUser, { subtype: 'channel_join', channel: 'C1234CHAN1', user: 'U1235QUUX' });
+  t.end();
+});
+
+test('no_double_part', async(t) => {
+  t.plan(1 + mocks.connectOneIrcClient.planCount);
+  const c = await mocks.connectOneIrcClient(t);
+
+  c.ircSocket.expect(':test_slack_barr PART #test_chan_1');
+  await c.daemon.onSlackMemberLeftChannel(c.ircUser, { channel: 'C1234CHAN1', user: 'U1235BARR' });
+  await c.daemon.onSlackMessage(c.ircUser, { subtype: 'channel_leave', channel: 'C1234CHAN1', user: 'U1235BARR' });
+  t.end();
+});
