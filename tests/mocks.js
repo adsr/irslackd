@@ -73,8 +73,10 @@ class MockSlackRtmClient extends EventEmitter {
   }
 }
 
-async function connectOneIrcClient(t) {
+async function connectOneIrcClient(t, prefs = []) {
+  // Mute test output
   console.log('# tape output off');
+
   // Start daemon
   const daemon = new irslackd.Irslackd({
     host: '1.2.3.4',
@@ -102,7 +104,7 @@ async function connectOneIrcClient(t) {
 
   // Send connect commands
   await daemon.onIrcNick(ircUser, {args: [ 'test_irc_nick' ] });
-  await daemon.onIrcPass(ircUser, {args: [ 'test_token' ] });
+  await daemon.onIrcPass(ircUser, {args: [ 'test_token', ...prefs ] });
   await daemon.onIrcUser(ircUser, {args: [ 'test_irc_user' ] });
   t.equal(ircUser.ircNick,     'test_slack_user', 'Expected ircNick after USER');
   t.equal(ircUser.slackToken,  'test_token',      'Expected slackToken after USER');
@@ -140,7 +142,10 @@ async function connectOneIrcClient(t) {
   ircSocket.expect(':irslackd 332 test_slack_user #test_chan_1 :topic1');
   ircSocket.expect(':irslackd 353 test_slack_user = #test_chan_1 :test_slack_user test_slack_user test_slack_fooo test_slack_barr');
   await daemon.onSlackReady(ircUser, 'ready');
+
+  // Turn test output back on
   console.log('# tape output on');
+
   return {
     daemon: daemon,
     ircSocket: ircSocket,
