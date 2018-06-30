@@ -1,10 +1,6 @@
 #!/usr/bin/env node
 'use strict';
 
-require('trace');
-require('clarify');
-Error.stackTraceLimit = 128;
-
 const os = require('os');
 const fs = require('fs');
 const irslackd = require('../lib/irslackd.js');
