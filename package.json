@@ -1,8 +1,9 @@
 {
   "name": "irslackd",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "An IRC gateway to Slack",
-  "main": "irslackd.js",
+  "main": "./lib/irslackd.js",
+  "bin": "./bin/irslackd.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/adsr/irslackd.git"
