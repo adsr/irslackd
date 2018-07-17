@@ -24,6 +24,7 @@ irslackd is actively developed and used daily on a 1000+ user Slack workspace.
     ```
     $ git clone https://github.com/adsr/irslackd.git
     $ cd irslackd
+    $ npm install    # Fetch dependencies into local `node_modules/` directory
     ```
 
 3. Run `./bin/create_tls_key.sh` to create a TLS key and cert. This will put
@@ -31,7 +32,6 @@ irslackd is actively developed and used daily on a 1000+ user Slack workspace.
 
 4. Run irslackd:
     ```
-    $ npm install
     $ ./irslackd
     ```
 
