@@ -27,6 +27,38 @@ test('irc_privmsg', async(t) => {
   t.end();
 });
 
+test('irc_privmsg_with_err', async(t) => {
+  t.plan(3 + mocks.connectOneIrcClient.planCount);
+  const c = await mocks.connectOneIrcClient(t);
+  c.slackWeb.expect('chat.postMessage', {
+    channel: 'C1234CHAN1',
+    text: 'hello world',
+    as_user: true,
+    thread_ts: null,
+  }, {
+    ok: false,
+    channel: 'C1234CHAN1',
+    ts: '1234.5678',
+  });
+  try {
+    await c.daemon.onIrcPrivmsg(c.ircUser, { args: [ '#test_chan_1', 'hello world' ] });
+  } catch (e) {
+    t.ok(e, 'Expected exception because ok==false');
+  }
+  c.slackWeb.expect('chat.postMessage', {
+    channel: 'C1234CHAN1',
+    text: 'hello world after error',
+    as_user: true,
+    thread_ts: null,
+  }, {
+    ok: true,
+    channel: 'C1234CHAN1',
+    ts: '1234.5678',
+  });
+  await c.daemon.onIrcPrivmsg(c.ircUser, { args: [ '#test_chan_1', 'hello world after error' ] });
+  t.end();
+});
+
 test('slack_privmsg', async(t) => {
   t.plan(1 + mocks.connectOneIrcClient.planCount);
   const c = await mocks.connectOneIrcClient(t);
