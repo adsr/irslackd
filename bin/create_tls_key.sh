@@ -1,20 +1,22 @@
 #!/bin/bash
 set -e
 
+die() { echo "$@" >&2; exit 1; }
+
+dir="~/.irslackd"
+
 while getopts ":d:" opt; do
   case $opt in
     d) dir="$OPTARG"
     ;;
-    \?) echo "Invalid option -$OPTARG" >&2
+    \?) die "Invalid option -$OPTARG"
     ;;
   esac
 done
-if [ -z "$dir" ]; then
-   dir="~/.irslackd"
-fi
+
 dir=$(eval echo $dir)
 
-mkdir -p $dir
+mkdir -p $dir || die "Failed to create directory $dir"
 set -x
 openssl req -newkey rsa:4096 -nodes -sha512 -x509 -days 3650 -nodes -out $dir/cert.pem -keyout $dir/pkey.pem
 fingerprint=$(openssl x509 -noout -fingerprint -sha512 -inform pem -in $dir/cert.pem | cut -d= -f2-)
