@@ -3,18 +3,14 @@ set -e
 
 die() { echo "$@" >&2; exit 1; }
 
-dir="~/.irslackd"
+dir="${HOME}/.irslackd"
 
 while getopts ":d:" opt; do
   case $opt in
-    d) dir="$OPTARG"
-    ;;
-    \?) die "Invalid option -$OPTARG"
-    ;;
+    d) dir="$OPTARG" ;;
+    \?) die "Invalid option -$OPTARG" ;;
   esac
 done
-
-dir=$(eval echo $dir)
 
 mkdir -p $dir || die "Failed to create directory $dir"
 set -x
