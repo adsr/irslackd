@@ -47,9 +47,8 @@ test('slack_ctcp_typing_disabled', async(t) => {
 
 test('slack_ctcp_typing_enabled', async(t) => {
   t.plan(1 + mocks.connectOneIrcClient.planCount);
-  const c = await mocks.connectOneIrcClient(t);
+  const c = await mocks.connectOneIrcClient(t, ['typing-notifications']);
   c.ircSocket.expect(':test_slack_user PRIVMSG #test_chan_1 :\x01TYPING 1\x01');
-  c.ircUser.preferences.push('typing-notifications');
   await c.daemon.onSlackUserTyping(c.ircUser, {
     type: 'user_typing',
     user: 'U1234USER',
