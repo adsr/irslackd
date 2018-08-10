@@ -71,6 +71,8 @@ class MockSlackRtmClient extends EventEmitter {
   }
   disconnect() {
   }
+  subscribePresence() {
+  }
 }
 
 async function connectOneIrcClient(t, prefs = []) {
