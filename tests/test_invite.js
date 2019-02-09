@@ -6,14 +6,20 @@ const mocks = require('./mocks');
 test('irc_invite', async(t) => {
   t.plan(2 + mocks.connectOneIrcClient.planCount);
   const c = await mocks.connectOneIrcClient(t);
-  c.slackWeb.expect('conversations.invite', { users: 'U1235BARR',
-    channel: 'CFOOBAR'}, {
+  c.ircUser.mapIrcToSlack('fun_user', 'U1234USER');
+  c.ircUser.mapIrcToSlack('#fun_channel', 'C1234CHAN1');
+  console.log('irctoslack:');
+  for (var i = 0, keys = Object.keys(c.ircUser.ircToSlack), ii = keys.length; i < ii; i++) {
+    console.log(keys[i] + '|' + c.ircUser.ircToSlack[keys[i]].list);
+  }
+  c.slackWeb.expect('conversations.invite', { users: 'U1234USER',
+    channel: 'C1234CHAN1'}, {
     ok: true,
     channel: [
-      { id: 'CFOOBAR' },
+      { id: 'C1234CHAN1' },
     ],
   });
-  c.ircSocket.expect(':irslackd 341 jay has invited U1235BARR to CFOOBAR');
-  await c.daemon.onIrcInvite(c.ircUser, { args: ['U1235BARR', 'CFOOBAR'] });
+  c.ircSocket.expect(':irslackd 341 jay has invited U1234USER to C1234CHAN1');
+  await c.daemon.onIrcInvite(c.ircUser, { args: ['fun_user', '#fun_channel'] });
   t.end();
 });
