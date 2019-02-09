@@ -13,7 +13,7 @@ test('irc_invite', async(t) => {
       { id: 'CFOOBAR' },
     ],
   });
-  c.ircSocket.expect('jay has invited U1235BARR to CFOOBAR');
+  c.ircSocket.expect(':irslackd 341 jay has invited U1235BARR to CFOOBAR');
   await c.daemon.onIrcInvite(c.ircUser, { args: ['U1235BARR', 'CFOOBAR'] });
   t.end();
 });
