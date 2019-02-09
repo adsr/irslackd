@@ -4,7 +4,7 @@ const test = require('tape');
 const mocks = require('./mocks');
 
 test('irc_invite', async(t) => {
-  t.plan(1 + mocks.connectOneIrcClient.planCount);
+  t.plan(2 + mocks.connectOneIrcClient.planCount);
   const c = await mocks.connectOneIrcClient(t);
   c.slackWeb.expect('conversations.invite', { users: 'U1235BARR',
     channel: 'CFOOBAR'}, {
