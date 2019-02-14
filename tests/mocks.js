@@ -16,9 +16,10 @@ class MockIrcSocket extends EventEmitter {
     this.expectedLines = [];
   }
   write(actualLine) {
-    const testMsg = 'Expected IRCd line: ' + actualLine;
+    var testMsg = 'Actual IRCd line: ' + actualLine;
     for (let i = 0; i < this.expectedLines.length; i++) {
       let expectedLine = this.expectedLines[i];
+      testMsg += 'Expected: ' + expectedLine;
       if (expectedLine.trim() === actualLine.trim()) {
         this.t.ok(true, testMsg);
         this.expectedLines.splice(i, 1);
