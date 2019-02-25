@@ -4,11 +4,13 @@ const test = require('tape');
 const mocks = require('./mocks');
 
 test('irc_kick', async(t) => {
-  t.plan(2 + mocks.connectOneIrcClient.planCount);
+  t.plan(1 + mocks.connectOneIrcClient.planCount);
   const c = await mocks.connectOneIrcClient(t);
   c.ircUser.mapIrcToSlack('fun_user', 'U1234USER');
   c.ircUser.mapIrcToSlack('#fun_channel', 'C1234CHAN1');
-  c.ircUser.channelNicks.put('#fun_channel', ['fun_user']);
+  var nickMap = new Map();
+  nickMap.set('fun_user', true);
+  c.ircUser.channelNicks.set('#fun_channel', nickMap);
   c.slackWeb.expect('conversations.kick', { user: 'U1234USER',
     channel: 'C1234CHAN1'}, {
     ok: true,
