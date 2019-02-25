@@ -15,7 +15,9 @@ test('irc_invite', async(t) => {
       { id: 'C1234CHAN1' },
     ],
   });
-  c.ircSocket.expect(':irslackd 341 test_slack_user U1234USER C1234CHAN1');
+  // RPL_INVITING
+  // <source> 341 <target> <nick> <channel>
+  c.ircSocket.expect(':irslackd 341 test_slack_user fun_user #fun_channel');
   await c.daemon.onIrcInvite(c.ircUser, { args: ['fun_user', '#fun_channel'] });
   t.end();
 });
