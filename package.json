@@ -20,7 +20,8 @@
   "homepage": "https://github.com/adsr/irslackd#readme",
   "scripts": {
     "pretest": "eslint --ignore-path .gitignore .",
-    "test": "testfn() { patt=${@:-test_}; find tests -name \"*${patt}*\" | xargs -n1 node | awk -f bin/filter-tape.awk; }; testfn"
+    "test": "testfn() { patt=${@:-test_}; find tests -name \"*${patt}*\" | xargs -n1 node | awk -f bin/filter-tape.awk; }; testfn",
+    "testone": "testfn() { patt=${@:-test_who}; find tests -name \"*${patt}*\" | xargs -n1 node | awk -f bin/filter-tape.awk; }; testfn"
   },
   "dependencies": {
     "@slack/client": "^4.8.0",
