@@ -1,0 +1,31 @@
+slack_in group_rename { type: 'group_rename',
+  channel: 
+   { id: 'GGM5P2ZE2',
+     name: 'private_jay',
+     name_normalized: 'private_jay',
+     is_group: true,
+     created: 1551375537 },
+  event_ts: '1551375694.000300',
+  ts: '1551375694.000300' }
+slack_in message { user: 'UG11EP7HU',
+  old_name: 'private_jhc',
+  name: 'private_jay',
+  user_profile: 
+   { avatar_hash: 'g9e4ba3d4e92',
+     image_72: 'https://secure.gravatar.com/avatar/9e4ba3d4e9251f076028e1d909b00535.jpg?s=72&d=https%3A%2F%2Fcfr.slack-edge.com%2F00b63%2Fimg%2Favatars%2Fava_0018-72.png',
+     first_name: '',
+     real_name: 'Jay Colson',
+     display_name: 'Jay',
+     team: 'T9SAAJ4T0',
+     name: 'jay',
+     is_restricted: false,
+     is_ultra_restricted: false },
+  type: 'message',
+  subtype: 'group_name',
+  team: 'T9SAAJ4T0',
+  text: '<@UG11EP7HU> has renamed the channel from "private_jhc" to "private_jay"',
+  channel: 'GGM5P2ZE2',
+  event_ts: '1551375694.000400',
+  ts: '1551375694.000400' }
+irchannel: #private_jhc
+irc_out :jay PRIVMSG #private_jhc :@jay has renamed the channel from "private_jhc" to "private_jay"

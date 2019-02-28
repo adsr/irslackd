@@ -1,0 +1,43 @@
+slack_in pong { type: 'pong', reply_to: 42 }
+slack_in group_rename { type: 'group_rename',
+  channel: 
+   { id: 'GGM5P2ZE2',
+     name: 'private_jc',
+     name_normalized: 'private_jc',
+     is_group: true,
+     created: 1551375537 },
+  event_ts: '1551376250.000700',
+  ts: '1551376250.000700' }
+irchannel: #private_j
+irc_out :jay PART #private_j
+slack_out conversations.info { channel: 'GGM5P2ZE2' }
+slack_in message { user: 'UG11EP7HU',
+  old_name: 'private_j',
+  name: 'private_jc',
+  user_profile: 
+   { avatar_hash: 'g9e4ba3d4e92',
+     image_72: 'https://secure.gravatar.com/avatar/9e4ba3d4e9251f076028e1d909b00535.jpg?s=72&d=https%3A%2F%2Fcfr.slack-edge.com%2F00b63%2Fimg%2Favatars%2Fava_0018-72.png',
+     first_name: '',
+     real_name: 'Jay Colson',
+     display_name: 'Jay',
+     team: 'T9SAAJ4T0',
+     name: 'jay',
+     is_restricted: false,
+     is_ultra_restricted: false },
+  type: 'message',
+  subtype: 'group_name',
+  team: 'T9SAAJ4T0',
+  text: '<@UG11EP7HU> has renamed the channel from "private_j" to "private_jc"',
+  channel: 'GGM5P2ZE2',
+  event_ts: '1551376250.000800',
+  ts: '1551376250.000800' }
+irchannel: undefined
+slack_out conversations.info { channel: 'GGM5P2ZE2' }
+slack_out conversations.info { channel: 'GGM5P2ZE2' }
+slack_out conversations.members { channel: 'GGM5P2ZE2', limit: 1000 }
+irc_out :jay JOIN #private_jc
+irc_out :irslackd 353 jay = #private_jc :+jay +jay
+slack_out conversations.members { channel: 'GGM5P2ZE2', limit: 1000 }
+irc_out :jay JOIN #private_jc
+irc_out :irslackd 353 jay = #private_jc :+jay +jay
+irc_out :jay PRIVMSG #private_jc :@jay has renamed the channel from "private_j" to "private_jc"

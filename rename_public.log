@@ -1,0 +1,51 @@
+slack_in channel_rename { type: 'channel_rename',
+  channel: 
+   { id: 'CG3N357T6',
+     is_channel: true,
+     name: 'renamed_public',
+     name_normalized: 'renamed_public',
+     created: 1549908891 },
+  event_ts: '1551375819.000400' }
+irchannel: #newjaytest
+irc_out :jay PART #newjaytest
+slack_out conversations.info { channel: 'CG3N357T6' }
+slack_in message { user: 'UG11EP7HU',
+  old_name: 'newjaytest',
+  name: 'renamed_public',
+  user_profile: 
+   { avatar_hash: 'g9e4ba3d4e92',
+     image_72: 'https://secure.gravatar.com/avatar/9e4ba3d4e9251f076028e1d909b00535.jpg?s=72&d=https%3A%2F%2Fcfr.slack-edge.com%2F00b63%2Fimg%2Favatars%2Fava_0018-72.png',
+     first_name: '',
+     real_name: 'Jay Colson',
+     display_name: 'Jay',
+     team: 'T9SAAJ4T0',
+     name: 'jay',
+     is_restricted: false,
+     is_ultra_restricted: false },
+  type: 'message',
+  subtype: 'channel_name',
+  team: 'T9SAAJ4T0',
+  text: '<@UG11EP7HU> has renamed the channel from "newjaytest" to "renamed_public"',
+  channel: 'CG3N357T6',
+  event_ts: '1551375819.000100',
+  ts: '1551375819.000100' }
+irchannel: undefined
+slack_out conversations.info { channel: 'CG3N357T6' }
+slack_out conversations.members { channel: 'CG3N357T6', limit: 1000 }
+slack_out conversations.info { channel: 'CG3N357T6' }
+slack_in channel_marked { type: 'channel_marked',
+  channel: 'CG3N357T6',
+  ts: '1551375879.000000',
+  unread_count: 0,
+  unread_count_display: 0,
+  num_mentions: 0,
+  num_mentions_display: 0,
+  mention_count: 0,
+  mention_count_display: 0,
+  event_ts: '1551375819.000900' }
+irc_out :jay JOIN #renamed_public
+irc_out :irslackd 353 jay = #renamed_public :+jay as +jay
+slack_out conversations.members { channel: 'CG3N357T6', limit: 1000 }
+irc_out :jay JOIN #renamed_public
+irc_out :irslackd 353 jay = #renamed_public :+jay as +jay
+irc_out :jay PRIVMSG #renamed_public :@jay has renamed the channel from "newjaytest" to "renamed_public"
