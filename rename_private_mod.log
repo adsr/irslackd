@@ -1,4 +1,3 @@
-slack_in pong { type: 'pong', reply_to: 42 }
 slack_in group_rename { type: 'group_rename',
   channel: 
    { id: 'GGM5P2ZE2',
