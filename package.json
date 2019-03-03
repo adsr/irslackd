@@ -20,13 +20,14 @@
   "homepage": "https://github.com/adsr/irslackd#readme",
   "scripts": {
     "pretest": "eslint --ignore-path .gitignore .",
-    "test": "testfn() { patt=${@:-test_}; find tests -name \"*${patt}*\" | xargs -rn1 node | awk -f bin/filter-tape.awk; }; testfn"
+    "test": "testfn() { patt=${@:-test_}; find tests -name \"*${patt}*\" | xargs -n1 node | awk -f bin/filter-tape.awk; }; testfn",
+    "testone": "testfn() { patt=${@:-test_topic}; find tests -name \"*${patt}*\" | xargs -n1 node | awk -f bin/filter-tape.awk; }; testfn"
   },
   "dependencies": {
     "@slack/client": "^4.8.0",
     "await-lock": "^1.1.3",
     "node-getopt": "^0.3.2",
-    "tape": "^4.9.1"
+    "tape": "^4.9.2"
   },
   "devDependencies": {
     "eslint": "^4.19.1",

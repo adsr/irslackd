@@ -1,0 +1,42 @@
+Feb 27 16:43:48 vpc irslackd[1039]: slack_in user_typing { type: 'user_typing', channel: 'D43KMNF16', user: 'U0AAQ3HQ9' }
+Feb 27 16:43:48 vpc irslackd[1039]: slack_out conversations.leave { channel: 'CGJ9UEYUA' }
+Feb 27 16:43:48 vpc irslackd[1039]: irc_in PART #sev_sfr Buh-bye!
+Feb 27 16:43:48 vpc irslackd[1039]: Trace: irslackd_err Failed onIrcPart: Error: {
+Feb 27 16:43:48 vpc irslackd[1039]: "method": "conversations.leave",
+Feb 27 16:43:48 vpc irslackd[1039]: "options": {
+Feb 27 16:43:48 vpc irslackd[1039]: "channel": "CGJ9UEYUA"
+Feb 27 16:43:48 vpc irslackd[1039]: },
+Feb 27 16:43:48 vpc irslackd[1039]: "error": {
+Feb 27 16:43:48 vpc irslackd[1039]: "code": "slackclient_platform_error",
+Feb 27 16:43:48 vpc irslackd[1039]: "data": {
+Feb 27 16:43:48 vpc irslackd[1039]: "ok": false,
+Feb 27 16:43:48 vpc irslackd[1039]: "error": "channel_not_found",
+Feb 27 16:43:48 vpc irslackd[1039]: "scopes": [
+Feb 27 16:43:48 vpc irslackd[1039]: "read",
+Feb 27 16:43:48 vpc irslackd[1039]: "client",
+Feb 27 16:43:48 vpc irslackd[1039]: "admin",
+Feb 27 16:43:48 vpc irslackd[1039]: "identify",
+Feb 27 16:43:48 vpc irslackd[1039]: "post",
+Feb 27 16:43:48 vpc irslackd[1039]: "apps"
+Feb 27 16:43:48 vpc irslackd[1039]: ],
+Feb 27 16:43:48 vpc irslackd[1039]: "acceptedScopes": [
+Feb 27 16:43:48 vpc irslackd[1039]: "channels:write",
+Feb 27 16:43:48 vpc irslackd[1039]: "groups:write",
+Feb 27 16:43:48 vpc irslackd[1039]: "mpim:write",
+Feb 27 16:43:48 vpc irslackd[1039]: "im:write",
+Feb 27 16:43:48 vpc irslackd[1039]: "post"
+Feb 27 16:43:48 vpc irslackd[1039]: ]
+Feb 27 16:43:48 vpc irslackd[1039]: }
+Feb 27 16:43:48 vpc irslackd[1039]: }
+Feb 27 16:43:48 vpc irslackd[1039]: }
+Feb 27 16:43:48 vpc irslackd[1039]: at WebClient.apiCallOrThrow (/home/ec2-user/src/irslackd/lib/irslackd.js:1268:13)
+Feb 27 16:43:48 vpc irslackd[1039]: at <anonymous>
+Feb 27 16:43:48 vpc irslackd[1039]: at process._tickCallback (internal/process/next_tick.js:189:7)
+Feb 27 16:43:48 vpc irslackd[1039]: at Irslackd.logError (/home/ec2-user/src/irslackd/lib/irslackd.js:1059:13)
+Feb 27 16:43:48 vpc irslackd[1039]: at res.catch (/home/ec2-user/src/irslackd/lib/irslackd.js:1231:18)
+Feb 27 16:43:48 vpc irslackd[1039]: at <anonymous>
+Feb 27 16:43:48 vpc irslackd[1039]: at process._tickCallback (internal/process/next_tick.js:189:7)
+Feb 27 16:43:49 vpc irslackd[1039]: slack_in pong { type: 'pong', reply_to: 1564 }
+Feb 27 16:43:49 vpc irslackd[1039]: slack_in pong { type: 'pong', reply_to: 25602 }
+Feb 27 16:43:50 vpc irslackd[1039]: irc_in WHO #randomtest
+

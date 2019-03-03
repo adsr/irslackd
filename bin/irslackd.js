@@ -10,6 +10,7 @@ const DEFAULT_PORT = 6697;
 const DEFAULT_TLS_PKEY = os.homedir() + '/.irslackd/pkey.pem';
 const DEFAULT_TLS_CERT = os.homedir() + '/.irslackd/cert.pem';
 const DEFAULT_RTM_CLIENT_LOG_LEVEL = 'info';
+const DEFAULT_MARK = false;
 
 const opt = require('node-getopt').create([
   [ 'h', 'help',            'Show this help' ],
@@ -18,10 +19,12 @@ const opt = require('node-getopt').create([
   [ 'k', 'privkey=PATH',    'Set TLS private key path (default: ' + DEFAULT_TLS_PKEY + ')' ],
   [ 'c', 'cert=PATH',       'Set TLS cert path (default: ' + DEFAULT_TLS_CERT + ')' ],
   [ 'L', 'rtmLogLvl=LEVEL', 'Set RTM Client log level (default: ' + DEFAULT_RTM_CLIENT_LOG_LEVEL + ')' ],
+  [ 'm', 'mark=BOOLEAN',    'Keep channels marked read in slack (default: ' + DEFAULT_MARK + ')' ],
   [ 'i', 'insecure',        'Do not use TLS encryption (not recommended)' ],
 ]).bindHelp().parseSystem();
 
 new irslackd.Irslackd({
+  mark: opt.options.mark || DEFAULT_MARK,
   host: opt.options.host || DEFAULT_HOST,
   port: opt.options.port || DEFAULT_PORT,
   tlsOpts: opt.options.insecure ? false : {
