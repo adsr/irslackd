@@ -31,6 +31,7 @@ class MockIrcSocket extends EventEmitter {
   end() {
   }
   expect(expectedLine) {
+    console.log('expecting ' + expectedLine);
     this.expectedLines.push(expectedLine);
   }
 }
@@ -79,7 +80,43 @@ async function connectOneIrcClient(t, prefs = []) {
   // Mute test output
   console.log('# tape output off');
 
-  // Start daemon
+  // Define setExpectedSlackCalls
+  const setExpectedSlackCalls = (slackWeb) => {
+    slackWeb.expect('auth.test',  undefined,           { ok: true, user_id: 'U1234USER' });
+    slackWeb.expect('users.info', {user: 'U1234USER'}, { ok: true, user: { name: 'test_slack_user' }});
+    slackWeb.expect('users.list', { limit: 1000 }, { ok: true, members: [
+      { id: 'U1234USER', name: 'test_slack_user', deleted: false },
+      { id: 'U1235FOOO', name: 'test_slack_fooo', deleted: false },
+      { id: 'U1235BARR', name: 'test_slack_barr', deleted: false },
+      { id: 'U1235BAZZ', name: 'test_slack_bazz', deleted: false },
+      { id: 'U1235QUUX', name: 'test_slack_quux', deleted: false },
+    ]});
+    slackWeb.expect('conversations.list', { types: 'public_channel,private_channel,mpim', limit: 1000 }, { ok: true, channels: [
+      { id: 'C1234CHAN1', name: 'test_chan_1', is_member: true,  topic: { value: 'topic1' }},
+      { id: 'C1235CHAN2', name: 'test_chan_2', is_member: false, topic: { value: 'topic2' }},
+    ]});
+    slackWeb.expect('users.setPresence', { presence: 'auto' }, { ok: true });
+    slackWeb.expect('usergroups.list', { include_count: false, include_disabled: false, include_users: false, limit: 1000 }, { ok: true, usergroups: [
+      { id: 'S1234GRP1', handle: '@group1' },
+      { id: 'S1234GRP2', handle: '@group2' },
+    ]});
+    slackWeb.expect('conversations.members', { channel: 'C1234CHAN1', limit: 1000 }, { ok: true, members: [
+      'U1234USER',
+      'U1235FOOO',
+      'U1235BARR',
+    ]});
+  };
+
+  // Define setExpectedIrcCalls
+  const setExpectedIrcCalls = (ircSocket) => {
+    ircSocket.expect(':irslackd 001 test_slack_user irslackd');
+    ircSocket.expect(':irslackd 376 test_slack_user :End of MOTD');
+    ircSocket.expect(':test_slack_user JOIN #test_chan_1');
+    ircSocket.expect(':irslackd 332 test_slack_user #test_chan_1 :topic1');
+    ircSocket.expect(':irslackd 353 test_slack_user = #test_chan_1 :test_slack_user test_slack_user test_slack_fooo test_slack_barr');
+  };
+
+  // Start irslackd
   const daemon = new irslackd.Irslackd({
     host: '1.2.3.4',
     port: 1234,
@@ -92,58 +129,30 @@ async function connectOneIrcClient(t, prefs = []) {
   daemon.getNewSlackRtmClient = (token)   => { return new MockSlackRtmClient(t); };
   daemon.getNewSlackWebClient = (token)   => {
     const slackWeb = new MockSlackWebClient(t);
-    slackWeb.expect('auth.test',  undefined,           { ok: true, user_id: 'U1234USER' });
-    slackWeb.expect('users.info', {user: 'U1234USER'}, { ok: true, user: { name: 'test_slack_user' }});
+    setExpectedSlackCalls(slackWeb);
     return slackWeb;
   };
   daemon.listen();
 
-  // Connect client
+  // Connect IRC client
   const ircSocket = new MockIrcSocket(t);
+  setExpectedIrcCalls(ircSocket);
   daemon.onIrcConnect(ircSocket);
   const ircUser = daemon.socketMap.get(ircSocket);
   t.ok(ircUser, 'Expected ircUser after onIrcConnect');
 
-  // Send connect commands
+  // Send IRC connect commands
   await daemon.onIrcNick(ircUser, {args: [ 'test_irc_nick' ] });
   await daemon.onIrcPass(ircUser, {args: [ 'test_token', ...prefs ] });
   await daemon.onIrcUser(ircUser, {args: [ 'test_irc_user' ] });
-  t.equal(ircUser.ircNick,     'test_slack_user', 'Expected ircNick after USER');
-  t.equal(ircUser.slackToken,  'test_token',      'Expected slackToken after USER');
-  t.equal(ircUser.slackUserId, 'U1234USER',       'Expected slackUserId after USER');
-  t.ok(ircUser.slackWeb, 'Expected slackWeb after USER');
-  t.ok(ircUser.slackRtm, 'Expected slackRtm after USER');
 
-  // Send ready event from Slack
-  const slackWeb = ircUser.slackWeb;
-  const slackRtm = ircUser.slackRtm;
-  slackWeb.expect('users.list', { limit: 1000 }, { ok: true, members: [
-    { id: 'U1234USER', name: 'test_slack_user', deleted: false },
-    { id: 'U1235FOOO', name: 'test_slack_fooo', deleted: false },
-    { id: 'U1235BARR', name: 'test_slack_barr', deleted: false },
-    { id: 'U1235BAZZ', name: 'test_slack_bazz', deleted: false },
-    { id: 'U1235QUUX', name: 'test_slack_quux', deleted: false },
-  ]});
-  slackWeb.expect('conversations.list', { types: 'public_channel,private_channel,mpim', limit: 1000 }, { ok: true, channels: [
-    { id: 'C1234CHAN1', name: 'test_chan_1', is_member: true,  topic: { value: 'topic1' }},
-    { id: 'C1235CHAN2', name: 'test_chan_2', is_member: false, topic: { value: 'topic2' }},
-  ]});
-  slackWeb.expect('users.setPresence', { presence: 'auto' }, { ok: true });
-  slackWeb.expect('usergroups.list', { include_count: false, include_disabled: false, include_users: false, limit: 1000 }, { ok: true, usergroups: [
-    { id: 'S1234GRP1', handle: '@group1' },
-    { id: 'S1234GRP2', handle: '@group2' },
-  ]});
-  slackWeb.expect('conversations.members', { channel: 'C1234CHAN1', limit: 1000 }, { ok: true, members: [
-    'U1234USER',
-    'U1235FOOO',
-    'U1235BARR',
-  ]});
-  ircSocket.expect(':irslackd 001 test_slack_user irslackd');
-  ircSocket.expect(':irslackd 376 test_slack_user :End of MOTD');
-  ircSocket.expect(':test_slack_user JOIN #test_chan_1');
-  ircSocket.expect(':irslackd 332 test_slack_user #test_chan_1 :topic1');
-  ircSocket.expect(':irslackd 353 test_slack_user = #test_chan_1 :test_slack_user test_slack_user test_slack_fooo test_slack_barr');
+  // Send Slack ready event
   await daemon.onSlackReady(ircUser, 'ready');
+  t.equal(ircUser.ircNick,     'test_slack_user', 'Expected ircNick');
+  t.equal(ircUser.slackToken,  'test_token',      'Expected slackToken');
+  t.equal(ircUser.slackUserId, 'U1234USER',       'Expected slackUserId');
+  t.ok(ircUser.slackWeb, 'Expected slackWeb');
+  t.ok(ircUser.slackRtm, 'Expected slackRtm');
 
   // Turn test output back on
   console.log('# tape output on');
@@ -152,8 +161,8 @@ async function connectOneIrcClient(t, prefs = []) {
     daemon: daemon,
     ircSocket: ircSocket,
     ircUser: ircUser,
-    slackWeb: slackWeb,
-    slackRtm: slackRtm,
+    slackWeb: ircUser.slackWeb,
+    slackRtm: ircUser.slackRtm,
   };
 }
 connectOneIrcClient.planCount = 18;
