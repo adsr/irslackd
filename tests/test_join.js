@@ -96,7 +96,7 @@ test('slack_join', async(t) => {
   c.ircSocket.expect(':test_slack_user JOIN #koolkeith');
   c.ircSocket.expect(':irslackd 332 test_slack_user #koolkeith :kool topic here');
   c.ircSocket.expect(':irslackd 353 test_slack_user = #koolkeith :test_slack_user test_slack_user test_slack_quux newguy');
-  await c.daemon.onSlackChannelJoined(c.ircUser, { channel: 'CKOOLKEITH' });
+  await c.daemon.onSlackChannelJoined(c.ircUser, { channel: { id: 'CKOOLKEITH' }});
   t.end();
 });
 
