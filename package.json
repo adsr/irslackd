@@ -20,7 +20,7 @@
   "homepage": "https://github.com/adsr/irslackd#readme",
   "scripts": {
     "pretest": "eslint --ignore-path .gitignore .",
-    "test": "testfn() { patt=${@:-test_}; find tests -name \"*${patt}*\" | xargs -rn1 node | awk -f bin/filter-tape.awk; }; testfn"
+    "test": "./bin/run-tests.sh"
   },
   "dependencies": {
     "@slack/client": "^4.8.0",
