@@ -12,7 +12,7 @@ test('irc_topic_set', async(t) => {
     topic: 'new topic',
   }, {
     ok: true,
-    topic: 'new topic diff',
+    channel: { topic: { value: 'new topic diff' }},
   });
 
   c.ircSocket.expect(':irslackd 332 test_slack_user #test_chan_1 :new topic diff');
