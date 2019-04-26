@@ -109,6 +109,7 @@ async function connectOneIrcClient(t, prefs = []) {
 
   // Define setExpectedIrcCalls
   const setExpectedIrcCalls = (ircSocket) => {
+    ircSocket.expect(':test_orig_nick NICK test_slack_user');
     ircSocket.expect(':irslackd 001 test_slack_user irslackd');
     ircSocket.expect(':irslackd 376 test_slack_user :End of MOTD');
     ircSocket.expect(':test_slack_user JOIN #test_chan_1');
@@ -142,7 +143,7 @@ async function connectOneIrcClient(t, prefs = []) {
   t.ok(ircUser, 'Expected ircUser after onIrcConnect');
 
   // Send IRC connect commands
-  await daemon.onIrcNick(ircUser, {args: [ 'test_irc_nick' ] });
+  await daemon.onIrcNick(ircUser, {args: [ 'test_orig_nick' ] });
   await daemon.onIrcPass(ircUser, {args: [ 'test_token', ...prefs ] });
   await daemon.onIrcUser(ircUser, {args: [ 'test_irc_user' ] });
 
@@ -165,7 +166,7 @@ async function connectOneIrcClient(t, prefs = []) {
     slackRtm: ircUser.slackRtm,
   };
 }
-connectOneIrcClient.planCount = 18;
+connectOneIrcClient.planCount = 19;
 
 exports.MockSlackWebClient = MockSlackWebClient;
 exports.MockSlackRtmClient = MockSlackRtmClient;
