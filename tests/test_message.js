@@ -105,6 +105,29 @@ test('slack_ircize_text', async(t) => {
   t.end();
 });
 
+test('slack_ircize_text_backticks', async(t) => {
+  t.plan(1 + mocks.connectOneIrcClient.planCount);
+  const c = await mocks.connectOneIrcClient(t);
+  c.slackWeb.expect('chat.postMessage', {
+    channel: 'C1234CHAN1',
+    text: 'hello ```<@U1235BAZZ>``` in <#C1234CHAN1|test_chan_1> `user <@U1235BAZZ>` your email is <mailto:aa@bb.cc|not@this.com> winner of `award',
+    as_user: true,
+    thread_ts: null,
+  }, {
+    ok: true,
+    channel: 'C1234CHAN1',
+    ts: '1234.5678',
+  });
+  c.ircSocket.expect(':test_slack_user PRIVMSG #test_chan_1 :hello ```<@U1235BAZZ>``` in #test_chan_1 `user <@U1235BAZZ>` your email is aa@bb.cc winner of `award');
+  await c.daemon.onSlackMessage(c.ircUser, {
+    text: 'hello ```<@U1235BAZZ>``` in <#C1234CHAN1|test_chan_1> `user <@U1235BAZZ>` your email is <mailto:aa@bb.cc|not@this.com> winner of `award',
+    user: 'U1234USER',
+    channel: 'C1234CHAN1',
+    ts: '1234.5678',
+  });
+  t.end();
+});
+
 test('irc_slackize_text', async(t) => {
   t.plan(1 + mocks.connectOneIrcClient.planCount);
   const c = await mocks.connectOneIrcClient(t);
