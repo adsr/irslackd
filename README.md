@@ -17,6 +17,20 @@ irslackd is actively developed and used daily on a 1000+ user Slack workspace.
 
 ### Setup
 
+#### Using docker-compose
+
+1. Clone irslackd and run docker-compose:
+    ```
+    $ git clone https://github.com/adsr/irslackd.git
+    $ docker-compose up
+    ```
+
+    _Recommendation: Watch docker-compose build output for the generated certificate's fingerprint (used later for verification)._
+
+1. Connect your IRC client to irslackd which listens on `127.0.0.1:6697`. See: [Configure your Slack account and IRC client](#configure-your-slack-account-and-irc-client)
+
+#### Manual
+
 1. [Install Node >=8.x][1] and npm. You can check your version of Node by
    running `node --version`.
 
@@ -38,7 +52,9 @@ irslackd is actively developed and used daily on a 1000+ user Slack workspace.
     By default irslackd listens on `127.0.0.1:6697`. Set the command line
     options `-p <port>` and/or `-a <address>` to change the listen address.
 
-5. Follow the link below to obtain an irslackd token for your Slack workspace:
+### Configure your Slack account and IRC client
+
+1. Follow the link below to obtain an irslackd token for your Slack workspace:
 
    [![Authorize irslackd](https://platform.slack-edge.com/img/add_to_slack.png)][2]
 
@@ -47,7 +63,7 @@ irslackd is actively developed and used daily on a 1000+ user Slack workspace.
 
    `xoxp-012345678901-012345678901-012345678901-0123456789abcdef0123456789abcdef`
 
-6. Connect to irslackd via your IRC client, e.g., WeeChat:
+2. Connect to irslackd via your IRC client, e.g., WeeChat:
     ```
     /server add irslackd_workspace localhost/6697
     /set irc.server.irslackd_workspace.ssl on
@@ -57,9 +73,9 @@ irslackd is actively developed and used daily on a 1000+ user Slack workspace.
     ```
     Check the wiki for more [client configuration notes][5].
 
-7. Repeat steps 5 and 6 for each Slack workspace you'd like to connect to.
+3. Repeat steps 1 and 2 for each Slack workspace you'd like to connect to.
 
-8. Enjoy a fresh IRC gateway experience.
+4. Enjoy a fresh IRC gateway experience.
 
 ### Contribute
 
