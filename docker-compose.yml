@@ -1,0 +1,15 @@
+version: '3'
+services:
+  irslackd:
+    build:
+      context: .
+      args:
+        - GIT_REPOSITORY=https://github.com/adsr/irslackd.git
+        - GIT_BRANCH=master
+        - SSL_LOCAL_CERTIFICATE_SUBJ=/CN=irslackd docker gateway
+    environment:
+      - IRSLACKD_HOST=${IRSLACKD_HOST}
+      - IRSLACKD_PORT=${IRSLACKD_PORT}
+    ports:
+      - ${IRSLACKD_HOST}:${IRSLACKD_PORT}:${IRSLACKD_PORT}
+    restart: always
