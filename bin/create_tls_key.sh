@@ -4,6 +4,7 @@ set -e
 die() { echo "$@" >&2; exit 1; }
 
 dir="${HOME}/.irslackd"
+subj='/CN=irslackd'
 
 while getopts ":d:s:" opt; do
   case $opt in
