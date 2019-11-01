@@ -8,5 +8,5 @@ services:
   - docker
 script:
   - npm test
-  - docker-compose build --build-arg GIT_REPOSITORY=https://github.com/${TRAVIS_PULL_REQUEST_SLUG}
-                         --build-arg GIT_BRANCH=${TRAVIS_PULL_REQUEST_BRANCH}
+  - docker-compose build --build-arg GIT_REPOSITORY=https://github.com/${TRAVIS_PULL_REQUEST_SLUG:-$TRAVIS_REPO_SLUG}
+                         --build-arg GIT_BRANCH=${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}
