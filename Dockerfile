@@ -1,4 +1,4 @@
-FROM centos:7
+FROM node:8-alpine
 
 MAINTAINER Filip Valder <valder@cesnet.cz>
 LABEL maintainer="Filip Valder <valder@cesnet.cz>"
@@ -9,15 +9,11 @@ ARG SSL_LOCAL_CERTIFICATE_SUBJ="/CN=irslackd docker gateway"
 
 ENV IRSLACKD_PORT=6697
 
-RUN yum -y update && \
-    yum -y install \
-        curl \
+RUN apk update && \
+    apk add \
+        bash \
         git \
         openssl \
-    && \
-    curl -sL https://rpm.nodesource.com/setup_8.x | bash - && \
-    yum install -y \
-        nodejs \
     && \
     mkdir /opt/irslackd && \
     git clone ${GIT_REPOSITORY} /tmp/irslackd.git && \
@@ -26,6 +22,8 @@ RUN yum -y update && \
     cd /opt/irslackd && \
     npm install && \
     ./bin/create_tls_key.sh -s "${SSL_LOCAL_CERTIFICATE_SUBJ}" && \
-    rm -rf /tmp/irslackd.git
+    rm -rf /tmp/irslackd.git && \
+    apk del git && \
+    rm -rf /var/cache/apk/*
 
 CMD ["sh", "-c", "/opt/irslackd/irslackd -a 0.0.0.0 -p ${IRSLACKD_PORT}"]
