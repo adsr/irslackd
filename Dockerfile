@@ -16,7 +16,7 @@ RUN apk update && \
         openssl \
     && \
     mkdir /opt/irslackd && \
-    git clone ${GIT_REPOSITORY} /tmp/irslackd.git && \
+    git clone --single-branch -b ${GIT_BRANCH} ${GIT_REPOSITORY} /tmp/irslackd.git && \
     cd /tmp/irslackd.git && \
     git archive ${GIT_BRANCH} | tar -xC /opt/irslackd && \
     cd /opt/irslackd && \
