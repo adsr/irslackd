@@ -15,8 +15,9 @@
  * 4. End-user does not have the string `PROFILE` in status text.
  */
 
-const util  = require('util');
-const slack = require('@slack/client');
+const util     = require('util');
+const slack    = require('@slack/client');
+const irslackd = require('../lib/irslackd.js');
 
 if (process.argv.length < 3) {
   console.log('Usage: ' + process.argv.join(' ') + ' <token>');
@@ -31,27 +32,25 @@ const apiCalls = [
   [ 'users.list',            'NONE', (res) => { res = res.members.filter(u => u.is_bot); if (res.length) { state.BOT_UID = res[0].id; } } ],
   [ 'conversations.list',    'NONE', (res) => { res = res.channels.filter(c => c.is_channel && !c.is_private && !c.is_member); if (res.length) { state.CHAN_CID = res[0].id; state.CHAN_NAME = res[0].name; } } ],
   [ 'usergroups.list',       'NONE' ],
-  [ 'im.open',               '{"user": "OTHER_UID"}', (res) => { state.IM_CID = res.channel.id; } ],
-  [ 'im.close',              '{"channel": "IM_CID"}' ],
+  [ 'conversations.open',    '{"users": "OTHER_UID"}', (res) => { state.IM_CID = res.channel.id; } ],
+  [ 'conversations.close',   '{"channel": "IM_CID"}' ],
   [ 'users.info',            '{"user": "OTHER_UID"}' ],
   [ 'users.profile.get',     '{"user": "MY_UID"}', (res) => { state.PROFILE = res.profile.status_text; state.EMOJI = res.profile.status_emoji; } ],
   [ 'users.profile.set',     '{"user": "MY_UID", "profile": {"status_text": "test", "status_emoji": ":sunglasses:"}}' ],
   [ 'users.profile.set',     '{"user": "MY_UID", "profile": {"status_text": "PROFILE", "status_emoji": "EMOJI"}}' ],
   [ 'users.setPresence',     '{"user": "MY_UID", "presence": "auto"}' ],
-  [ 'channels.join',         '{"name": "#CHAN_NAME"}' ],
-  [ 'channels.leave',        '{"channel": "CHAN_CID"}' ],
+  [ 'conversations.join',    '{"channel": "CHAN_CID"}' ],
   [ 'conversations.info',    '{"channel": "CHAN_CID"}' ],
   [ 'conversations.members', '{"channel": "CHAN_CID"}' ],
+  [ 'conversations.leave',   '{"channel": "CHAN_CID"}' ],
   [ 'users.info',            '{"user": "BOT_UID"}', (res) => { state.BOT_BID = res.user.profile.bot_id; } ],
   [ 'bots.info',             '{"bot": "BOT_BID"}' ],
 ];
 
-const slackToken = process.argv[2];
-const slackWeb = new slack.WebClient(slackToken);
-
 (async() => {
-  for (let i = 0; i < apiCalls.length; ++i) {
-    try {
+  const testWebClient = async(slackWeb) => {
+    console.log('Testing slack.WebClient...');
+    for (let i = 0; i < apiCalls.length; ++i) {
       let [method, optsJson, processFn] = apiCalls[i];
       let realJson = optsJson;
       for (var key in state) if (state.hasOwnProperty(key)) {
@@ -65,11 +64,38 @@ const slackWeb = new slack.WebClient(slackToken);
       const res = await slackWeb.apiCall(method, options);
       if (!res.ok) throw res;
       if (processFn) processFn(res);
-    } catch (e) {
-      console.error(util.inspect(e));
-      console.log(util.inspect(state));
-      process.exit(1);
     }
+  };
+
+  const testRtmClient = async(slackRtm) => {
+    console.log('Testing slack.RTMClient...');
+    slackRtm.start();
+    console.log(await new Promise((resolve, reject) => {
+      let timer = setTimeout(() => {
+        reject('Timed out waiting for ready event');
+      }, 5000);
+      slackRtm.on('ready', (event) => {
+        clearTimeout(timer);
+        slackRtm.disconnect();
+        resolve('Received ready event');
+      });
+    }));
+  };
+
+  const [slackToken, slackCookie] = irslackd.Irslackd.parseSlackToken(process.argv[2]);
+  const slackWebHeaders = slackCookie ? { headers: { Cookie: slackCookie }} : {};
+  const slackRtmHeaders = slackCookie ? { tls: { headers: { Cookie: slackCookie }}} : {};
+
+  const slackWeb = new slack.WebClient(slackToken, slackWebHeaders);
+  const slackRtm = new slack.RTMClient(slackToken, slackRtmHeaders);
+
+  try {
+    await testWebClient(slackWeb);
+    await testRtmClient(slackRtm);
+  } catch (e) {
+    console.error(util.inspect(e));
+    console.log(util.inspect(state));
+    process.exit(1);
   }
   console.log('Looks OK!');
 })();
