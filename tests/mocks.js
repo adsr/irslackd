@@ -115,6 +115,7 @@ async function connectOneIrcClient(t, prefs = []) {
     ircSocket.expect(':test_slack_user JOIN #test_chan_1');
     ircSocket.expect(':irslackd 332 test_slack_user #test_chan_1 :topic1');
     ircSocket.expect(':irslackd 353 test_slack_user = #test_chan_1 :test_slack_user test_slack_user test_slack_fooo test_slack_barr');
+    ircSocket.expect(':irslackd 366 test_slack_user #test_chan_1 :End of /NAMES list');
   };
 
   // Start irslackd
@@ -166,7 +167,7 @@ async function connectOneIrcClient(t, prefs = []) {
     slackRtm: ircUser.slackRtm,
   };
 }
-connectOneIrcClient.planCount = 19;
+connectOneIrcClient.planCount = 20;
 
 exports.MockSlackWebClient = MockSlackWebClient;
 exports.MockSlackRtmClient = MockSlackRtmClient;

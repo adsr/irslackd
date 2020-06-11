@@ -4,7 +4,7 @@ const test = require('tape');
 const mocks = require('./mocks');
 
 test('slack_mpim_open', async(t) => {
-  t.plan(6 + mocks.connectOneIrcClient.planCount);
+  t.plan(7 + mocks.connectOneIrcClient.planCount);
   const c = await mocks.connectOneIrcClient(t);
   c.slackWeb.expect('conversations.info', { channel: 'G1234GROUP' }, {
     ok: true,
@@ -31,6 +31,7 @@ test('slack_mpim_open', async(t) => {
   c.ircSocket.expect(':test_slack_user JOIN #mpdm-user1--user2--user3--user4-1');
   c.ircSocket.expect(':irslackd 332 test_slack_user #mpdm-user1--user2--user3--user4-1 :Group messaging');
   c.ircSocket.expect(':irslackd 353 test_slack_user = #mpdm-user1--user2--user3--user4-1 :test_slack_user test_slack_user test_slack_barr test_slack_bazz test_slack_quux');
+  c.ircSocket.expect(':irslackd 366 test_slack_user #mpdm-user1--user2--user3--user4-1 :End of /NAMES list');
   await c.daemon.onSlackMpimOpen(c.ircUser, {
     user: 'U1234USER',
     channel: 'G1234GROUP',
