@@ -27,6 +27,7 @@ test('irc_join_simple', async(t) => {
   c.ircSocket.expect(':irslackd 353 test_slack_user = #foobar :test_slack_user test_slack_user test_slack_barr test_slack_bazz test_slack_quux');
   c.ircSocket.expect(':irslackd 366 test_slack_user #foobar :End of /NAMES list');
   await c.daemon.onIrcJoin(c.ircUser, { args: [ '#foobar' ] });
+  c.end();
   t.end();
 });
 
@@ -58,6 +59,7 @@ test('irc_join_already_in', async(t) => {
   c.ircSocket.expect(':irslackd 353 test_slack_user = #foobar :test_slack_user test_slack_user test_slack_barr test_slack_bazz test_slack_quux');
   c.ircSocket.expect(':irslackd 366 test_slack_user #foobar :End of /NAMES list');
   await c.daemon.onIrcJoin(c.ircUser, { args: [ '#foobar' ] });
+  c.end();
   t.end();
 });
 
@@ -82,6 +84,7 @@ test('irc_join_csv', async(t) => {
     c.ircSocket.expect(':irslackd 366 test_slack_user #' + chan + ' :End of /NAMES list');
   }
   await c.daemon.onIrcJoin(c.ircUser, { args: [ '#foobar,#quuxbar' ] });
+  c.end();
   t.end();
 });
 
@@ -101,6 +104,7 @@ test('slack_join', async(t) => {
   c.ircSocket.expect(':irslackd 353 test_slack_user = #koolkeith :test_slack_user test_slack_user test_slack_quux newguy');
   c.ircSocket.expect(':irslackd 366 test_slack_user #koolkeith :End of /NAMES list');
   await c.daemon.onSlackChannelJoined(c.ircUser, { channel: { id: 'CKOOLKEITH' }});
+  c.end();
   t.end();
 });
 
@@ -111,6 +115,7 @@ test('no_double_join', async(t) => {
   c.ircSocket.expect(':test_slack_quux JOIN #test_chan_1');
   await c.daemon.onSlackMemberJoinedChannel(c.ircUser, { channel: 'C1234CHAN1', user: 'U1235QUUX' });
   await c.daemon.onSlackMessage(c.ircUser, { subtype: 'channel_join', channel: 'C1234CHAN1', user: 'U1235QUUX' });
+  c.end();
   t.end();
 });
 
@@ -121,5 +126,6 @@ test('no_double_part', async(t) => {
   c.ircSocket.expect(':test_slack_barr PART #test_chan_1');
   await c.daemon.onSlackMemberLeftChannel(c.ircUser, { channel: 'C1234CHAN1', user: 'U1235BARR' });
   await c.daemon.onSlackMessage(c.ircUser, { subtype: 'channel_leave', channel: 'C1234CHAN1', user: 'U1235BARR' });
+  c.end();
   t.end();
 });

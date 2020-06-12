@@ -32,5 +32,6 @@ test('slack_rename', async(t) => {
       created: 1527736458,
     },
   });
+  c.end();
   t.end();
 });

@@ -14,5 +14,6 @@ test('irc_kick', async(t) => {
   });
   c.ircSocket.expect(':test_slack_user KICK #test_chan_1 test_slack_fooo');
   await c.daemon.onIrcKick(c.ircUser, { args: ['#test_chan_1', 'test_slack_fooo'] });
+  c.end();
   t.end();
 });

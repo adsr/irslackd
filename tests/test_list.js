@@ -19,5 +19,6 @@ test('irc_list', async(t) => {
   c.ircSocket.expect(':irslackd 322 test_slack_user #chan3 3 :chan3 topic');
   c.ircSocket.expect(':irslackd 323 test_slack_user :End of LIST');
   await c.daemon.onIrcList(c.ircUser, { args: [] });
+  c.end();
   t.end();
 });

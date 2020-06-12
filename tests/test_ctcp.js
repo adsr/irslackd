@@ -17,6 +17,7 @@ test('irc_ctcp_action', async(t) => {
     ts: '1234.5678',
   });
   await c.daemon.onIrcPrivmsg(c.ircUser, { args: [ '#test_chan_1', '\x01ACTION me\x01' ] });
+  c.end();
   t.end();
 });
 
@@ -31,6 +32,7 @@ test('slack_me_message', async(t) => {
     ts: '1234.5678',
     subtype: 'me_message',
   });
+  c.end();
   t.end();
 });
 
@@ -42,6 +44,7 @@ test('slack_ctcp_typing_disabled', async(t) => {
     user: 'U1234USER',
     channel: 'C1234CHAN1',
   });
+  c.end();
   t.end();
 });
 
@@ -54,5 +57,6 @@ test('slack_ctcp_typing_enabled', async(t) => {
     user: 'U1234USER',
     channel: 'C1234CHAN1',
   });
+  c.end();
   t.end();
 });

@@ -24,6 +24,7 @@ test('irc_privmsg', async(t) => {
     channel: 'C1234CHAN1',
     ts: '1234.5678',
   });
+  c.end();
   t.end();
 });
 
@@ -56,6 +57,7 @@ test('irc_privmsg_with_err', async(t) => {
     ts: '1234.5678',
   });
   await c.daemon.onIrcPrivmsg(c.ircUser, { args: [ '#test_chan_1', 'hello world after error' ] });
+  c.end();
   t.end();
 });
 
@@ -69,6 +71,7 @@ test('slack_privmsg', async(t) => {
     channel: 'C1234CHAN1',
     ts: '1234.5678',
   });
+  c.end();
   t.end();
 });
 
@@ -82,6 +85,7 @@ test('slack_ircize_text', async(t) => {
     channel: 'C1234CHAN1',
     ts: '1234.5678',
   });
+  c.end();
   t.end();
 });
 
@@ -95,6 +99,7 @@ test('slack_ircize_text_backticks', async(t) => {
     channel: 'C1234CHAN1',
     ts: '1234.5678',
   });
+  c.end();
   t.end();
 });
 
@@ -112,6 +117,7 @@ test('slack_ircize_text_backticks_two', async(t) => {
     channel: 'C1234CHAN1',
     ts: '1234.5678',
   });
+  c.end();
   t.end();
 });
 
@@ -135,6 +141,7 @@ test('irc_slackize_text', async(t) => {
     channel: 'C1234CHAN1',
     ts: '1234.5678',
   });
+  c.end();
   t.end();
 });
 
@@ -158,5 +165,6 @@ test('irc_no_slackize_text', async(t) => {
     channel: 'C1234CHAN1',
     ts: '1234.5678',
   });
+  c.end();
   t.end();
 });

@@ -16,6 +16,7 @@ test('slack_presence_change_noop', async(t) => {
     presence: 'active',
     user: 'U1234USER',
   });
+  c.end();
   t.end();
 });
 
@@ -28,6 +29,7 @@ test('slack_presence_change_away', async(t) => {
     presence: 'away',
     user: 'U1234USER',
   });
+  c.end();
   t.end();
 });
 
@@ -40,5 +42,6 @@ test('slack_presence_change_active', async(t) => {
     presence: 'active',
     user: 'U1234USER',
   });
+  c.end();
   t.end();
 });
