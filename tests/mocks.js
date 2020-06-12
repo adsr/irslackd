@@ -17,16 +17,18 @@ class MockIrcSocket extends EventEmitter {
   }
   write(actualLine) {
     const testMsg = 'Expected IRCd line: ' + actualLine;
-    for (let i = 0; i < this.expectedLines.length; i++) {
-      let expectedLine = this.expectedLines[i];
-      if (expectedLine.trim() === actualLine.trim()) {
-        this.t.ok(true, testMsg);
-        this.expectedLines.splice(i, 1);
-        return true;
-      }
+    if (this.expectedLines.length === 0) {
+      this.t.fail('Expected nothing, but got IRCd line: ' + actualLine);
+      return false;
     }
-    this.t.fail(testMsg);
-    return false;
+    let expected = this.expectedLines[0];
+    if (expected.trim() !== actualLine.trim()) {
+      this.t.fail('Expected IRCd line: ' + expected + ', but got: ' + actualLine);
+      return false;
+    }
+    this.expectedLines.shift();
+    this.t.ok(true, testMsg);
+    return true;
   }
   end() {
   }
@@ -110,12 +112,12 @@ async function connectOneIrcClient(t, prefs = []) {
   // Define setExpectedIrcCalls
   const setExpectedIrcCalls = (ircSocket) => {
     ircSocket.expect(':test_orig_nick NICK test_slack_user');
-    ircSocket.expect(':irslackd 001 test_slack_user irslackd');
-    ircSocket.expect(':irslackd 376 test_slack_user :End of MOTD');
     ircSocket.expect(':test_slack_user JOIN #test_chan_1');
     ircSocket.expect(':irslackd 332 test_slack_user #test_chan_1 :topic1');
     ircSocket.expect(':irslackd 353 test_slack_user = #test_chan_1 :test_slack_user test_slack_user test_slack_fooo test_slack_barr');
     ircSocket.expect(':irslackd 366 test_slack_user #test_chan_1 :End of /NAMES list');
+    ircSocket.expect(':irslackd 001 test_slack_user irslackd');
+    ircSocket.expect(':irslackd 376 test_slack_user :End of MOTD');
   };
 
   // Start irslackd
