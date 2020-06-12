@@ -18,6 +18,7 @@ test('irc_topic_set', async(t) => {
   c.ircSocket.expect(':irslackd 332 test_slack_user #test_chan_1 :new topic diff');
   await c.daemon.onIrcTopic(c.ircUser, { args: [ '#test_chan_1', 'new topic' ] });
 
+  c.end();
   t.end();
 });
 
@@ -35,5 +36,6 @@ test('irc_topic_get', async(t) => {
   c.ircSocket.expect(':irslackd 332 test_slack_user #test_chan_1 :whatever topic');
   await c.daemon.onIrcTopic(c.ircUser, { args: [ '#test_chan_1' ] });
 
+  c.end();
   t.end();
 });

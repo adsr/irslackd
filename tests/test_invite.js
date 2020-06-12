@@ -16,5 +16,6 @@ test('irc_invite', async(t) => {
 
   c.ircSocket.expect(':irslackd 341 test_slack_user test_slack_quux #test_chan_1');
   await c.daemon.onIrcInvite(c.ircUser, { args: ['test_slack_quux', '#test_chan_1'] });
+  c.end();
   t.end();
 });

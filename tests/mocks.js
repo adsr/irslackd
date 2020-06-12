@@ -14,8 +14,12 @@ class MockIrcSocket extends EventEmitter {
     super();
     this.t = t;
     this.expectedLines = [];
+    this.ended = false;
   }
   write(actualLine) {
+    if (this.ended) {
+      this.t.fail('Received IRCd line after socket had ended: ' + actualLine);
+    }
     const testMsg = 'Expected IRCd line: ' + actualLine;
     if (this.expectedLines.length === 0) {
       this.t.fail('Expected nothing, but got IRCd line: ' + actualLine);
@@ -31,6 +35,13 @@ class MockIrcSocket extends EventEmitter {
     return true;
   }
   end() {
+    if (this.expectedLines.length !== 0) {
+      this.t.fail('Expected IRCd lines were never received');
+    }
+    if (this.ended) {
+      this.t.fail('MockIrcSocket had already ended');
+    }
+    this.ended = true;
   }
   expect(expectedLine) {
     console.log('expecting ' + expectedLine);
@@ -167,6 +178,7 @@ async function connectOneIrcClient(t, prefs = []) {
     ircUser: ircUser,
     slackWeb: ircUser.slackWeb,
     slackRtm: ircUser.slackRtm,
+    end: () => ircSocket.end(),
   };
 }
 connectOneIrcClient.planCount = 20;

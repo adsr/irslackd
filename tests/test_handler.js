@@ -16,6 +16,7 @@ test('irc_handler', async(t) => {
   let maxChecks = 10;
   (function checkMarker() {
     if (marker) {
+      c.end();
       t.end();
     } else if (maxChecks--) {
       console.log('Sleeping...');
@@ -39,6 +40,7 @@ test('slack_handler', async(t) => {
   let maxChecks = 10;
   (function checkMarker() {
     if (marker) {
+      c.end();
       t.end();
     } else if (maxChecks--) {
       console.log('Sleeping...');

@@ -27,5 +27,6 @@ test('parse_at_slack_command', async(t) => {
   t.deepEqual(c.daemon.parseAtSlackCmd('-trailing='),                   [{trailing: true}, []]);
   t.deepEqual(c.daemon.parseAtSlackCmd('-trailing'),                    [{trailing: true}, []]);
   t.deepEqual(c.daemon.parseAtSlackCmd('-trailing=""'),                 [{trailing: ''}, []]);
+  c.end();
   t.end();
 });

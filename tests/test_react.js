@@ -19,5 +19,6 @@ test('slack_react', async(t) => {
     },
     event_ts: '1360782804.083113',
   });
+  c.end();
   t.end();
 });

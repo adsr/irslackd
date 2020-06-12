@@ -41,5 +41,6 @@ test('slack_mpim_open', async(t) => {
   }, {
     ts: '1234.5678',
   });
+  c.end();
   t.end();
 });

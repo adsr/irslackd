@@ -18,6 +18,7 @@ test('pref_no-reactions', async(t) => {
     },
     event_ts: '1360782804.083113',
   });
+  c.end();
   t.end();
 });
 
@@ -31,5 +32,6 @@ test('pref_no-threads', async(t) => {
     ts: '1234.5678',
     thread_ts: '12345678.901234',
   });
+  c.end();
   t.end();
 });

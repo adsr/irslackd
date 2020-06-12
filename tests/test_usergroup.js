@@ -30,5 +30,6 @@ test('slack_usergroup_updated', async(t) => {
     channel: 'C1234CHAN1',
     ts: '1234.5678',
   });
+  c.end();
   t.end();
 });
