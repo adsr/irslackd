@@ -168,3 +168,79 @@ test('irc_no_slackize_text', async(t) => {
   c.end();
   t.end();
 });
+
+test('slack_ircize_here', async(t) => {
+  t.plan(1 + mocks.connectOneIrcClient.planCount);
+  const c = await mocks.connectOneIrcClient(t);
+  c.ircSocket.expect(':test_slack_user PRIVMSG #test_chan_1 :hello @here ');
+  await c.daemon.onSlackMessage(c.ircUser, {
+    text: 'hello <!here>',
+    user: 'U1234USER',
+    channel: 'C1234CHAN1',
+    ts: '1234.5678',
+  });
+  c.end();
+  t.end();
+});
+
+test('irc_slackize_here', async(t) => {
+  t.plan(1 + mocks.connectOneIrcClient.planCount);
+  const c = await mocks.connectOneIrcClient(t);
+  c.slackWeb.expect('chat.postMessage', {
+    channel: 'C1234CHAN1',
+    text: 'hello <!here>',
+    as_user: true,
+    thread_ts: null,
+  }, {
+    ok: true,
+    channel: 'C1234CHAN1',
+    ts: '1234.5678',
+  });
+  await c.daemon.onIrcPrivmsg(c.ircUser, { args: [ '#test_chan_1', 'hello @here' ] });
+  await c.daemon.onSlackMessage(c.ircUser, {
+    text: 'hello <!here>',
+    user: 'U1234USER',
+    channel: 'C1234CHAN1',
+    ts: '1234.5678',
+  });
+  c.end();
+  t.end();
+});
+
+test('slack_ircize_channel', async(t) => {
+  t.plan(1 + mocks.connectOneIrcClient.planCount);
+  const c = await mocks.connectOneIrcClient(t);
+  c.ircSocket.expect(':test_slack_user PRIVMSG #test_chan_1 :hello @channel');
+  await c.daemon.onSlackMessage(c.ircUser, {
+    text: 'hello <!channel>',
+    user: 'U1234USER',
+    channel: 'C1234CHAN1',
+    ts: '1234.5678',
+  });
+  c.end();
+  t.end();
+});
+
+test('irc_slackize_channel', async(t) => {
+  t.plan(1 + mocks.connectOneIrcClient.planCount);
+  const c = await mocks.connectOneIrcClient(t);
+  c.slackWeb.expect('chat.postMessage', {
+    channel: 'C1234CHAN1',
+    text: 'hello <!channel>',
+    as_user: true,
+    thread_ts: null,
+  }, {
+    ok: true,
+    channel: 'C1234CHAN1',
+    ts: '1234.5678',
+  });
+  await c.daemon.onIrcPrivmsg(c.ircUser, { args: [ '#test_chan_1', 'hello @channel' ] });
+  await c.daemon.onSlackMessage(c.ircUser, {
+    text: 'hello <!channel>',
+    user: 'U1234USER',
+    channel: 'C1234CHAN1',
+    ts: '1234.5678',
+  });
+  c.end();
+  t.end();
+});
