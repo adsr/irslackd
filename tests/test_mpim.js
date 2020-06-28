@@ -70,10 +70,10 @@ test('slack_short_group_chat_names', async(t) => {
     'U1235BAZZ',
     'U1235QUUX',
   ]});
-  c.ircSocket.expect(':test_slack_user JOIN &user2-user3-user4-1');
-  c.ircSocket.expect(':irslackd 332 test_slack_user &user2-user3-user4-1 :Group messaging');
-  c.ircSocket.expect(':irslackd 353 test_slack_user = &user2-user3-user4-1 :test_slack_user test_slack_user test_slack_barr test_slack_bazz test_slack_quux');
-  c.ircSocket.expect(':irslackd 366 test_slack_user &user2-user3-user4-1 :End of /NAMES list');
+  c.ircSocket.expect(':test_slack_user JOIN &user2-user3-user4');
+  c.ircSocket.expect(':irslackd 332 test_slack_user &user2-user3-user4 :Group messaging');
+  c.ircSocket.expect(':irslackd 353 test_slack_user = &user2-user3-user4 :test_slack_user test_slack_user test_slack_barr test_slack_bazz test_slack_quux');
+  c.ircSocket.expect(':irslackd 366 test_slack_user &user2-user3-user4 :End of /NAMES list');
   await c.daemon.onSlackMpimOpen(c.ircUser, {
     user: 'U1234USER',
     channel: 'G1234GROUP',
