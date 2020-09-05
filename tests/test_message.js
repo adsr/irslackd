@@ -75,6 +75,27 @@ test('slack_privmsg', async(t) => {
   t.end();
 });
 
+test('slack_delete_image', async(t) => {
+  t.plan(2 + mocks.connectOneIrcClient.planCount);
+  const c = await mocks.connectOneIrcClient(t);
+  c.ircSocket.expect(':test_slack_user PRIVMSG #test_chan_1 :\x01ACTION deletes:\x01');
+  c.ircSocket.expect(':test_slack_user PRIVMSG #test_chan_1 :\x01ACTION > https://site.com/image.jpg\x01');
+  await c.daemon.onSlackMessage(c.ircUser, {
+    type: 'message',
+    subtype: 'message_deleted',
+    channel: 'C1234CHAN1',
+    previous_message: {
+      type: 'message',
+      text: '',
+      user: 'U1234USER',
+      files: [{
+        url_private: 'https://site.com/image.jpg',
+      }],
+    },
+    ts: '1234.5678',
+  });
+});
+
 test('slack_ircize_text', async(t) => {
   t.plan(1 + mocks.connectOneIrcClient.planCount);
   const c = await mocks.connectOneIrcClient(t);
