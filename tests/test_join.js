@@ -6,7 +6,7 @@ const mocks = require('./mocks');
 test('irc_join_simple', async(t) => {
   t.plan(6 + mocks.connectOneIrcClient.planCount);
   const c = await mocks.connectOneIrcClient(t);
-  c.slackWeb.expect('channels.join', { name: 'foobar' }, {
+  c.slackWeb.expect('conversations.create', { name: 'foobar', is_private: false }, {
     ok: true,
     already_in_channel: false,
     channel: {
@@ -32,14 +32,10 @@ test('irc_join_simple', async(t) => {
 });
 
 test('irc_join_already_in', async(t) => {
-  t.plan(7 + mocks.connectOneIrcClient.planCount);
+  t.plan(6 + mocks.connectOneIrcClient.planCount);
   const c = await mocks.connectOneIrcClient(t);
-  c.slackWeb.expect('channels.join', { name: 'foobar' }, {
-    ok: true,
-    already_in_channel: true,
-    channel: { id: 'CFOOBAR' },
-  });
-  c.slackWeb.expect('conversations.info', { channel: 'CFOOBAR' }, {
+  c.ircUser.mapIrcToSlack('#foobar', 'CFOOBAR');
+  c.slackWeb.expect('conversations.join', { channel: 'CFOOBAR' }, {
     ok: true,
     channel: {
       id: 'CFOOBAR',
@@ -47,6 +43,7 @@ test('irc_join_already_in', async(t) => {
         value: 'foobar topic here',
       },
     },
+    warning: 'already_in_channel',
   });
   c.slackWeb.expect('conversations.members', { channel: 'CFOOBAR', limit: 1000 }, { ok: true, members: [
     'U1234USER',
@@ -68,10 +65,13 @@ test('irc_join_csv', async(t) => {
   const c = await mocks.connectOneIrcClient(t);
   for (let chan of ['foobar', 'quuxbar']) {
     const chanId = 'C' + chan.toUpperCase();
-    c.slackWeb.expect('channels.join', { name: chan }, { ok: true, channel: {
-      id: chanId,
-      topic: { value: chan + ' topic here' },
-    }});
+    c.slackWeb.expect('conversations.create', { name: chan, is_private: false }, {
+      ok: true,
+      channel: {
+        id: chanId,
+        topic: { value: chan + ' topic here' },
+      },
+    });
     c.slackWeb.expect('conversations.members', { channel: chanId, limit: 1000 }, { ok: true, members: [
       'U1234USER',
       'U1235BARR',
