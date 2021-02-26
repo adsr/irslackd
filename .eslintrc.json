@@ -4,7 +4,7 @@
   },
   "extends": "strongloop",
   "parserOptions": {
-    "ecmaVersion": 8
+    "ecmaVersion": 9
   },
   "rules": {
     "no-multi-spaces": 0,
