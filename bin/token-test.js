@@ -28,10 +28,10 @@ let state = {NONE: '{}'};
 
 const apiCalls = [
   [ 'auth.test',             'NONE', (res) => { state.MY_UID = res.user_id; } ],
-  [ 'users.list',            'NONE', (res) => { res = res.members.filter(u => !u.is_bot && u.id !== state.MY_UID); if (res.length) { state.OTHER_UID = res[0].id; } } ],
-  [ 'users.list',            'NONE', (res) => { res = res.members.filter(u => u.is_bot); if (res.length) { state.BOT_UID = res[0].id; } } ],
-  [ 'conversations.list',    'NONE', (res) => { res = res.channels.filter(c => c.is_channel && !c.is_private && !c.is_member); if (res.length) { state.CHAN_CID = res[0].id; state.CHAN_NAME = res[0].name; } } ],
-  [ 'usergroups.list',       'NONE' ],
+  [ 'users.list',            '{"_ignore": NONE, "limit": 1000}', (res) => { res = res.members.filter(u => !u.is_bot && u.id !== state.MY_UID); if (res.length) { state.OTHER_UID = res[0].id; } } ],
+  [ 'users.list',            '{"_ignore": NONE, "limit": 1000}', (res) => { res = res.members.filter(u => u.is_bot); if (res.length) { state.BOT_UID = res[0].id; } } ],
+  [ 'conversations.list',    '{"_ignore": NONE, "limit": 1000}', (res) => { res = res.channels.filter(c => c.is_channel && !c.is_private && !c.is_member && !c.is_archived); if (res.length) { state.CHAN_CID = res[0].id; state.CHAN_NAME = res[0].name; } } ],
+  [ 'usergroups.list',       '{"_ignore": NONE, "limit": 1000}' ],
   [ 'conversations.open',    '{"users": "OTHER_UID"}', (res) => { state.IM_CID = res.channel.id; } ],
   [ 'conversations.close',   '{"channel": "IM_CID"}' ],
   [ 'users.info',            '{"user": "OTHER_UID"}' ],
