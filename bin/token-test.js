@@ -86,6 +86,9 @@ const apiCalls = [
   const slackWebHeaders = slackCookie ? { headers: { Cookie: slackCookie }} : {};
   const slackRtmHeaders = slackCookie ? { tls: { headers: { Cookie: slackCookie }}} : {};
 
+  console.log('Using slackToken=' + JSON.stringify(slackToken));
+  console.log('Using slackCookie=' + JSON.stringify(slackCookie));
+
   const slackWeb = new slack.WebClient(slackToken, slackWebHeaders);
   const slackRtm = new slack.RTMClient(slackToken, slackRtmHeaders);
 
