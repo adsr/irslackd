@@ -106,5 +106,5 @@ irslackd is actively developed and used daily on a 1000+ user Slack workspace.
 [1]: https://nodejs.org/
 [2]: https://slack.com/oauth/authorize?client_id=2151705565.329118621748&scope=client
 [3]: https://github.com/adsr/irslackd/issues
-[4]: https://join.slack.com/t/irslackd/shared_invite/enQtNDUzMTgzNzAyNDUxLWVhMzgwMTYyYzczN2Y0ZmIyYmEyZDgwZDk2MTdiZmVjZTJhM2FkMjgzOTEyMmNiNGY2YzU2MzgxZGExYWY3ZDA
+[4]: https://join.slack.com/t/irslackd/shared_invite/zt-5s6tvir7-Gp71YBznUVT5_z608xFQRg
 [5]: https://github.com/adsr/irslackd/wiki/IRC-Client-Config
