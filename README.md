@@ -57,6 +57,10 @@ irslackd is actively developed and used daily on a 1000+ user Slack workspace.
 1. Follow the link below to obtain an irslackd token for your Slack workspace:
 
    [![Authorize irslackd](https://platform.slack-edge.com/img/add_to_slack.png)][2]
+   
+   NOTE: This is broken at the time of writing (25-Jan-2022). The callback was
+   hosted on hook.io which appears to be dead. Need to find a new host. See the
+   wiki for setting up an `xoxc` token instead which should still work.
 
    Select the desired workspace in the dropdown in the upper right corner. Click
    'Authorize', and copy the access token. It will look something like this:
