@@ -1,0 +1,13 @@
+name: irslackd_test
+on: [push, pull_request]
+jobs:
+  irslackd_test_job:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: deps
+        run: |
+          sudo apt-get install -y npm
+      - name: test
+        run: npm test
