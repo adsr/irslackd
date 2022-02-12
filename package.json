@@ -29,7 +29,7 @@
     "tape": "^4.9.1"
   },
   "devDependencies": {
-    "eslint": "^5.16.0",
+    "eslint": "^8.9.0",
     "eslint-config-strongloop": "^2.1.0"
   }
 }
