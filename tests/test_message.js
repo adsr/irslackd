@@ -75,6 +75,31 @@ test('slack_privmsg', async(t) => {
   t.end();
 });
 
+test('slack_privmsg_w_blocks', async(t) => {
+  t.plan(1 + mocks.connectOneIrcClient.planCount);
+  const c = await mocks.connectOneIrcClient(t);
+  c.ircSocket.expect(':test_slack_user PRIVMSG #test_chan_1 :hello mars');
+  await c.daemon.onSlackMessage(c.ircUser, {
+    text: '',
+    user: 'U1234USER',
+    channel: 'C1234CHAN1',
+    ts: '1234.5678',
+    blocks: [
+      {
+        type: 'rich_text',
+        elements: [
+          {
+            type: 'rich_text_section',
+            elements: [ { type: 'text', text: 'hello mars' } ],
+          },
+        ],
+      },
+    ],
+  });
+  c.end();
+  t.end();
+});
+
 test('slack_delete_image', async(t) => {
   t.plan(2 + mocks.connectOneIrcClient.planCount);
   const c = await mocks.connectOneIrcClient(t);
