@@ -107,3 +107,34 @@ test('slack_im_receive_from_self', async(t) => {
   c.end();
   t.end();
 });
+
+// User reacted on a different client in an IM
+test('slack_im_react', async(t) => {
+  t.plan(2 + mocks.connectOneIrcClient.planCount);
+
+  const c = await mocks.connectOneIrcClient(t);
+
+  c.ircSocket.expect(':test_slack_user PRIVMSG test_slack_barr :' + String.fromCharCode(1) + 'ACTION reacts @ test_slack_barr :sunglasses:' + String.fromCharCode(1));
+
+  c.slackWeb.expect('conversations.info', { channel: 'D1235CHAN1' }, {
+    ok: true,
+    channel: {
+      user: 'U1235BARR',
+      id: 'D1235CHAN1',
+      is_im: true,
+    },
+  });
+
+  await c.daemon.onSlackReactionAdded(c.ircUser, {
+    type: 'reaction_added',
+    user: 'U1234USER',
+    reaction: 'sunglasses',
+    item_user: 'U1235BARR',
+    item: {
+      type: 'message',
+      channel: 'D1235CHAN1',
+    },
+  });
+  c.end();
+  t.end();
+});
