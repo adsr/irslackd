@@ -1,6 +1,6 @@
 {
   "name": "irslackd",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "An IRC gateway to Slack",
   "main": "./lib/irslackd.js",
   "bin": "./bin/irslackd.js",
