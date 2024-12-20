@@ -167,6 +167,23 @@ test('slack_ircize_text_backticks_two', async(t) => {
   t.end();
 });
 
+test('slack_ircize_text_async_resolve', async(t) => {
+  t.plan(3 + mocks.connectOneIrcClient.planCount);
+  const c = await mocks.connectOneIrcClient(t);
+  // Unrecognized id will pass through on ircized, but `users.info` call will fire async
+  c.ircSocket.expect(':test_slack_user PRIVMSG #test_chan_1 :hello <@U9999WHAT> <@U8888WHAT> in #test_chan_1');
+  c.slackWeb.expect('users.info', { user: 'U9999WHAT' }, { ok: true, user: { name: 'what9999' }});
+  c.slackWeb.expect('users.info', { user: 'U8888WHAT' }, { ok: false, user: { name: 'what8888' }}); // Ensure caught
+  await c.daemon.onSlackMessage(c.ircUser, {
+    text: 'hello <@U9999WHAT> <@U8888WHAT> in <#C1234CHAN1|test_chan_1>',
+    user: 'U1234USER',
+    channel: 'C1234CHAN1',
+    ts: '1234.5678',
+  });
+  c.end();
+  t.end();
+});
+
 test('irc_slackize_text', async(t) => {
   t.plan(1 + mocks.connectOneIrcClient.planCount);
   const c = await mocks.connectOneIrcClient(t);
@@ -259,6 +276,20 @@ test('slack_ircize_channel', async(t) => {
   c.ircSocket.expect(':test_slack_user PRIVMSG #test_chan_1 :hello @channel');
   await c.daemon.onSlackMessage(c.ircUser, {
     text: 'hello <!channel>',
+    user: 'U1234USER',
+    channel: 'C1234CHAN1',
+    ts: '1234.5678',
+  });
+  c.end();
+  t.end();
+});
+
+test('slack_ircize_date', async(t) => {
+  t.plan(1 + mocks.connectOneIrcClient.planCount);
+  const c = await mocks.connectOneIrcClient(t);
+  c.ircSocket.expect(':test_slack_user PRIVMSG #test_chan_1 :hello 2024-08-21T17:18:09.549Z');
+  await c.daemon.onSlackMessage(c.ircUser, {
+    text: 'hello <!date^1724260689^{date_pretty} at {time}|2024-08-21T17:18:09.549Z>',
     user: 'U1234USER',
     channel: 'C1234CHAN1',
     ts: '1234.5678',

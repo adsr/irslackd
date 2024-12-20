@@ -103,6 +103,7 @@ async function connectOneIrcClient(t, prefs = []) {
       { id: 'U1235BARR', name: 'test_slack_barr', deleted: false },
       { id: 'U1235BAZZ', name: 'test_slack_bazz', deleted: false },
       { id: 'U1235QUUX', name: 'test_slack_quux', deleted: false },
+      { id: 'U1235QUU2', name: 'test_slack_quux', deleted: false }, // Test duplicate ids
     ]});
     slackWeb.expect('conversations.list', { types: 'public_channel,private_channel,mpim', limit: 1000 }, { ok: true, channels: [
       { id: 'C1234CHAN1', name: 'test_chan_1', is_member: true,  topic: { value: 'topic1' }},
