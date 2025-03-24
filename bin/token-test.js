@@ -16,8 +16,11 @@
  */
 
 const util     = require('util');
-const slack    = require('@slack/client');
 const irslackd = require('../lib/irslackd.js');
+
+const { WebClient } = require('@slack/web-api');
+const { RTMClient } = require('@slack/rtm-api');
+const slack = { WebClient: WebClient, RTMClient: RTMClient };
 
 if (process.argv.length < 3) {
   console.log('Usage: ' + process.argv.join(' ') + ' <token>');
