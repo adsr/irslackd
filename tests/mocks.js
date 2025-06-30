@@ -95,8 +95,11 @@ async function connectOneIrcClient(t, prefs = []) {
 
   // Define setExpectedSlackCalls
   const setExpectedSlackCalls = (slackWeb) => {
-    slackWeb.expect('auth.test',  undefined,           { ok: true, user_id: 'U1234USER' });
-    slackWeb.expect('users.info', {user: 'U1234USER'}, { ok: true, user: { name: 'test_slack_user' }});
+    slackWeb.expect('auth.test',  undefined,             { ok: true, user_id: 'U1234USER' });
+    slackWeb.expect('users.info', { user: 'U1234USER' }, { ok: true, user: {
+      name: 'test_slack_user',
+      enterprise_user: { id: 'W1234USER' },
+    }});
     slackWeb.expect('users.list', { limit: 1000 }, { ok: true, members: [
       { id: 'U1234USER', name: 'test_slack_user', deleted: false },
       { id: 'U1235FOOO', name: 'test_slack_fooo', deleted: false },
@@ -110,8 +113,8 @@ async function connectOneIrcClient(t, prefs = []) {
       { id: 'C1235CHAN2', name: 'test_chan_2', is_member: false, topic: { value: 'topic2' }},
     ]});
     slackWeb.expect('users.setPresence', { presence: 'auto' }, { ok: true });
-    slackWeb.expect('usergroups.list', { include_count: false, include_disabled: false, include_users: false, limit: 1000 }, { ok: true, usergroups: [
-      { id: 'S1234GRP1', handle: '@group1' },
+    slackWeb.expect('usergroups.list', { include_count: false, include_disabled: false, include_users: true, limit: 1000 }, { ok: true, usergroups: [
+      { id: 'S1234GRP1', handle: '@group1', users: [ 'W1234USER' ] },
       { id: 'S1234GRP2', handle: '@group2' },
     ]});
     slackWeb.expect('conversations.members', { channel: 'C1234CHAN1', limit: 1000 }, { ok: true, members: [
@@ -167,6 +170,11 @@ async function connectOneIrcClient(t, prefs = []) {
   t.equal(ircUser.ircNick,     'test_slack_user', 'Expected ircNick');
   t.equal(ircUser.slackToken,  'test_token',      'Expected slackToken');
   t.equal(ircUser.slackUserId, 'U1234USER',       'Expected slackUserId');
+  t.looseEqual(
+    Array.from(ircUser.slackUserIds),
+    ['U1234USER', 'W1234USER'],
+    'Expected slackUserIds (plural)',
+  );
   t.ok(ircUser.slackWeb, 'Expected slackWeb');
   t.ok(ircUser.slackRtm, 'Expected slackRtm');
 
@@ -182,7 +190,7 @@ async function connectOneIrcClient(t, prefs = []) {
     end: () => ircSocket.end(),
   };
 }
-connectOneIrcClient.planCount = 20;
+connectOneIrcClient.planCount = 21;
 
 exports.MockSlackWebClient = MockSlackWebClient;
 exports.MockSlackRtmClient = MockSlackRtmClient;

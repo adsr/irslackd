@@ -24,3 +24,13 @@ test('irc_at_slack_chat_err', async(t) => {
   c.end();
   t.end();
 });
+
+test('irc_at_slack_subteams', async(t) => {
+  t.plan(2 + mocks.connectOneIrcClient.planCount);
+  const c = await mocks.connectOneIrcClient(t);
+  c.ircSocket.expect(':irslackd NOTICE #test_chan_1 :Member of 1 subteam(s):');
+  c.ircSocket.expect(':irslackd NOTICE #test_chan_1 :@group1');
+  await c.daemon.onIrcPrivmsg(c.ircUser, { args: [ '#test_chan_1', '@slack subteams' ] });
+  c.end();
+  t.end();
+});
