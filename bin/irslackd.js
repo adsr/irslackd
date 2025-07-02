@@ -10,6 +10,7 @@ const DEFAULT_PORT = 6697;
 const DEFAULT_TLS_PKEY = os.homedir() + '/.irslackd/pkey.pem';
 const DEFAULT_TLS_CERT = os.homedir() + '/.irslackd/cert.pem';
 const DEFAULT_RTM_CLIENT_LOG_LEVEL = 'info';
+const DEFAULT_LINE_LEN = 4096;
 
 const opt = require('node-getopt').create([
   [ 'h', 'help',            'Show this help' ],
@@ -19,6 +20,7 @@ const opt = require('node-getopt').create([
   [ 'c', 'cert=PATH',       'Set TLS cert path (default: ' + DEFAULT_TLS_CERT + ')' ],
   [ 'L', 'rtmLogLvl=LEVEL', 'Set RTM Client log level (default: ' + DEFAULT_RTM_CLIENT_LOG_LEVEL + ')' ],
   [ 'i', 'insecure',        'Do not use TLS encryption (not recommended)' ],
+  [ 'l', 'lineLen',         'Set RPL_ISUPPORT LINELEN (default: ' + DEFAULT_LINE_LEN + ')' ],
 ]).bindHelp().parseSystem();
 
 new irslackd.Irslackd({
@@ -29,4 +31,5 @@ new irslackd.Irslackd({
     cert: fs.readFileSync(opt.options.cert || DEFAULT_TLS_CERT),
   },
   rtmClientLogLevel: opt.options.rtmLogLvl || DEFAULT_RTM_CLIENT_LOG_LEVEL,
+  lineLen: opt.options.lineLen || DEFAULT_LINE_LEN,
 }).listen();

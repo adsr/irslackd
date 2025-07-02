@@ -132,6 +132,7 @@ async function connectOneIrcClient(t, prefs = []) {
     ircSocket.expect(':irslackd 353 test_slack_user = #test_chan_1 :test_slack_user test_slack_user test_slack_fooo test_slack_barr');
     ircSocket.expect(':irslackd 366 test_slack_user #test_chan_1 :End of /NAMES list');
     ircSocket.expect(':irslackd 001 test_slack_user irslackd');
+    ircSocket.expect(':irslackd 005 test_slack_user LINELEN=4096 :are supported by this server');
     ircSocket.expect(':irslackd 376 test_slack_user :End of MOTD');
   };
 
@@ -143,8 +144,9 @@ async function connectOneIrcClient(t, prefs = []) {
       key: 'key',
       cert: 'cert',
     },
+    lineLen: 4096,
   });
-  daemon.getNewIrcd           = (tlsOpts) => { return new MockIrcd(tlsOpts);     };
+  daemon.getNewIrcd           = (config) =>  { return new MockIrcd(config);      };
   daemon.getNewSlackRtmClient = (token)   => { return new MockSlackRtmClient(t); };
   daemon.getNewSlackWebClient = (token)   => {
     const slackWeb = new MockSlackWebClient(t);
@@ -190,7 +192,7 @@ async function connectOneIrcClient(t, prefs = []) {
     end: () => ircSocket.end(),
   };
 }
-connectOneIrcClient.planCount = 21;
+connectOneIrcClient.planCount = 22;
 
 exports.MockSlackWebClient = MockSlackWebClient;
 exports.MockSlackRtmClient = MockSlackRtmClient;
