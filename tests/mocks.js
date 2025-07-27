@@ -132,7 +132,10 @@ async function connectOneIrcClient(t, prefs = []) {
     ircSocket.expect(':irslackd 353 test_slack_user = #test_chan_1 :test_slack_user test_slack_user test_slack_fooo test_slack_barr');
     ircSocket.expect(':irslackd 366 test_slack_user #test_chan_1 :End of /NAMES list');
     ircSocket.expect(':irslackd 001 test_slack_user irslackd');
-    ircSocket.expect(':irslackd 005 test_slack_user LINELEN=4096 :are supported by this server');
+    ircSocket.expect(':irslackd 002 test_slack_user :Your host is irslackd, running version irslackd');
+    ircSocket.expect(':irslackd 003 test_slack_user :This server was created by humans');
+    ircSocket.expect(':irslackd 004 test_slack_user irslackd irslackd irslackd');
+    ircSocket.expect(':irslackd 005 test_slack_user LINELEN=4096 CHANTYPES=#& :are supported by this server');
     ircSocket.expect(':irslackd 376 test_slack_user :End of MOTD');
   };
 
@@ -192,7 +195,7 @@ async function connectOneIrcClient(t, prefs = []) {
     end: () => ircSocket.end(),
   };
 }
-connectOneIrcClient.planCount = 22;
+connectOneIrcClient.planCount = 25;
 
 exports.MockSlackWebClient = MockSlackWebClient;
 exports.MockSlackRtmClient = MockSlackRtmClient;
